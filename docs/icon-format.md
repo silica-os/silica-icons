@@ -589,7 +589,7 @@ layers carry no symbol.
               "highlight_opacity": 0.5, "offset": 4 },
   "tint": {
     "luminance": [0.35, 0.85], "shade": 0.72, "glow": 0.5,
-    "labels": { "red": "#f2382e", "orange": "#ff8a00", "yellow": "#f5c400", "green": "#2fb350",
+    "labels": { "red": "#f2382e", "orange": "#f98a17", "yellow": "#f5c400", "green": "#2fb350",
                 "blue": "#2f7cf6", "purple": "#a052e0", "gray": "#8e8e93" }
   },
   "folders": { "HOME": "house", "DESKTOP": "display", "DOCUMENTS": "doc-text",
