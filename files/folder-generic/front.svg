@@ -29,9 +29,9 @@
       </feMerge>
     </filter>
   </defs>
-  <g id="front" stroke="none" fill="none" fill-rule="evenodd">
+  <g id="Files-/-Folder-Full-1024" stroke="none" fill="none" fill-rule="evenodd">
     <g id="Artwork" stroke-width="1">
-      <g id="Front">
+      <g id="front">
         <use fill="black" fill-opacity="1" filter="url(#filter-10)" xlink:href="#path-9" />
         <use fill="url(#linearGradient-8)" fill-rule="evenodd" xlink:href="#path-9" />
         <use fill="black" fill-opacity="1" filter="url(#filter-11)" xlink:href="#path-9" />

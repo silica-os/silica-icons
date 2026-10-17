@@ -86,8 +86,7 @@ Deliberate exceptions:
   reference (see The existing keylines): sheet 684 × 904 from (170, 60), folder 944 × 760 from
   (40, 132), both centered on (512, 512). History: the starting drawing (sheet 520 × 680,
   folder 680 × 520) was brought to the 824 body (sheet 648 × 824 at the √φ ratio, folder
-  824 × 663), then to the full canvas with the file manager measures (v0.2.0). The sheet content is
-  centered on y 469 (473 before), above the extension; the front panel of the folder is
+  824 × 663), then to the full canvas with the file manager measures (v0.2.0). The front panel of the folder is
   944 × 619 from y 273.1 (0.815 of the height; in the reference 0.82);
 - the Trash is 656 wide (rim 667) and 824 tall, with the bin base at y 924, on the bottom of the
   app body: in the Dock it rests on the same line and has the same height;
@@ -97,22 +96,13 @@ Deliberate exceptions:
 - the Trash is neither sheet nor folder: it has its own keyline, measured in the Dock;
 - Stack Close (the Dock button that closes an open stack) is in `badges/` as `stack-close`
   (badges.json → `dock`): the same disc and material as the file badges, with a cross;
-- the file types added for Mustache (spreadsheet, presentation, font, disk image, executable,
-  document, web page) have the figure in the 461 × 292 box centered on
-  (512, 473), like Code and Image (the width of the text lines of the sheets, 461 ≈ 472 within
-  tolerance; 292 series A); the spreadsheet table has gaps of 13.5, the slide is
-  461 × 285 (ratio φ), the globe Ø 292 with meridians of 13.5, "Aa" is Inter SemiBold in
-  outlines with capital height 292, the disk of the disk image is 461 × 229 (series A).
-  These measures are on the 824 sheet and in the SVGs they all scale by 1.0971 around (512, 512)
-  (box 506 × 320 centered on (512, 469));
 - volumes are 824 × 509 slabs with radius 64 and the server is three units 155 tall with gaps
   of 22, on the 824 drawing; in the SVGs they scale by 1.1456 around the center (slab 944 × 583,
   radius 73).
 
-In the SVGs the scale is in a single attribute: `transform` on the `icon` group (`icon-dark`)
-for folders, volumes and Trash; for the sheets the group scales everything by 1.0971 and the
-outline (`Page`) and the fold (`Corner`) additionally have a horizontal reduction of 684 / 711
-around the axis of the sheet. The paths stay those of the 824 drawing.
+In the SVGs of volumes and Trash the scale is in a single attribute: `transform` on the `icon`
+group (`icon-dark`); the paths stay those of the 824 drawing. The layers of `file-generic` and
+`folder-generic` are exported from the Apps Kit in canvas coordinates.
 
 ### Optical corrections and deviations from the pure ratio
 
@@ -159,10 +149,10 @@ part of the illustration and stay.
 This also holds for `file` icons: all of them (sheets, folders, Trash, volumes and badges) are
 **flat**, only fills, internal gradients and a thin outline of the sheet or slab, with no
 ground shadow and no external or internal shadows made with filters: the context shadow is
-added by the shell (IC-01). There is no `filter` in the SVGs of `files/`. The sheets, folders
-and Trash drawn before the file types for Mustache had the ground shadow and the shadows of
-the pieces: they were flattened with the same rule, without changing shape, colors or
-proportions.
+added by the shell (IC-01). The SVGs of `files/` have no `filter`, except the layers of
+`file-generic` and `folder-generic` (see Layered sheet and folder). The earlier sheets, folders
+and Trash had the ground shadow and the shadows of the pieces: they were flattened with the
+same rule, without changing shape, colors or proportions.
 
 Vertical gradient of sheets and folders: measured in the reference file manager at large icons (Rec. 709
 luminance between 10 % and 90 % of the front panel height, away from edges and symbols), the
@@ -173,11 +163,10 @@ steps, with half the measured drop by design choice (panel `#82C4FD` to `#68B0FA
 back `#4497F8` to `#3589F1`), against
 ≈ 31 when they followed the measure and ≈ 64 for folders and ≈ 12 for sheets before.
 
-**Fold shadow.** Under the folded corner of the sheet a soft shadow falls on the page: a
-circle Ø 131.6 centered on the inner corner of the fold, (697.3, 220.2) in the 1024 canvas,
-with a radial gradient from black at 16 % in the center to transparent at the edge, drawn
-between the page and the corner and clipped to the page (`Fold-shadow` group). The corner
-hides most of it: what shows is a soft halo along the fold's lower and left edges. No filter.
+**Fold shadow.** Under the folded corner of the sheet a soft shadow falls on the page: the
+drop shadow of the fold (offset −2, 8, blur 48, `#3A4A6A` at 20 %), clipped to the sheet by a
+mask inside the `front` layer. The corner hides most of it: what shows is a soft halo along the
+fold's lower and left edges.
 
 **No dark variants.** Sheets and folders are the same in every theme, as in the reference:
 there is no `-dark` artwork for `file-generic` or `folder-generic` (the Apps Kit has no dark
@@ -330,7 +319,7 @@ Composition (symbols, text, tints, type mapping) belongs to the thumbnail genera
 silica-desktop; this repo only provides the layers.
 
 Design source: the Silica 1.0 Amalfi Apps Kit (Sketch), artboard `Files / File 1024`, layers
-`Sheet` (→ `back`) and `Fold` (→ `front`).
+`back` and `front` in the `Artwork` group.
 
 ### Volumes
 
@@ -428,7 +417,7 @@ Composition (symbols, text, tints, special folders) belongs to the thumbnail gen
 silica-desktop; this repo only provides the layers.
 
 Design source: the Silica 1.0 Amalfi Apps Kit (Sketch), artboards `Files / Folder 1024` and
-`Files / Folder Full 1024`, layers `Back`, `Sheet` (→ `middle`) and `Front`.
+`Files / Folder Full 1024`, layers `back`, `middle` (Full only) and `front` in the `Artwork` group.
 
 ## Icons without layers
 

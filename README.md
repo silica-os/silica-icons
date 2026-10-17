@@ -9,7 +9,7 @@
 
 <p align="center">
   <b>The icons of Silica.</b><br>
-  App icons, folders and file types, and system symbols, all original.
+  App icons, file and folder icons, and system symbols, all original.
 </p>
 
 <p align="center">
@@ -24,7 +24,7 @@ project.
 
 ```
 apps/      app icons, layered: the shell applies shape, shadows, glass and themes
-files/     folders, file types, Trash, Dock controls: layered, free-form
+files/     generic file and folder, Trash, volumes: layered, free-form
 badges/    badges overlaid on file icons (alias, locked, unreadable, cloud)
 symbols/   system glyphs (Control Center, menu bar, settings, toolbars): monochrome,
            vector, multiple weights, colored by the theme
