@@ -47,18 +47,18 @@
                 <feMergeNode in="shadowMatrixInner2"></feMergeNode>
             </feMerge>
         </filter>
-        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-9">
+        <linearGradient x1="49.999585%" y1="-10.6382979%" x2="49.999585%" y2="425.531915%" id="linearGradient-9">
             <stop stop-color="#FFFFFF" offset="0%"></stop>
             <stop stop-color="#D8DDE5" offset="100%"></stop>
         </linearGradient>
-        <path d="M330,87 C352.512988,87 373.288395,94.4394713 390.001937,106.994132 L390,134 L378.733545,133.999074 C365.911066,122.202881 348.796695,115 330,115 C311.203305,115 294.088934,122.202881 281.266455,133.999074 L270,134 L269.999059,106.993383 C286.712431,94.4391755 307.487459,87 330,87 Z" id="path-10"></path>
-        <filter x="9.5%" y="-4.9%" width="81.0%" height="43.4%" filterUnits="objectBoundingBox" id="filter-11">
+        <path d="M330,87 C352.512988,87 373.288395,94.4394713 390.001937,106.994132 L390,134 L378.733545,133.999074 C365.911066,122.202881 348.796695,115 330,115 C311.203305,115 294.088934,122.202881 281.266455,133.999074 L269.999059,134 L269.999059,106.993383 C286.712431,94.4391755 307.487459,87 330,87 Z" id="path-10"></path>
+        <filter x="-17.5%" y="-31.9%" width="135.0%" height="189.4%" filterUnits="objectBoundingBox" id="filter-11">
             <feOffset dx="0" dy="6" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
             <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
             <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.4 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
         </filter>
-        <filter x="11.0%" y="-3.4%" width="78.0%" height="40.5%" filterUnits="objectBoundingBox" id="filter-12">
+        <filter x="-15.0%" y="-25.5%" width="130.0%" height="176.6%" filterUnits="objectBoundingBox" id="filter-12">
             <feGaussianBlur stdDeviation="2" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
             <feOffset dx="0" dy="3" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
             <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
@@ -183,7 +183,7 @@
                 <use fill="black" fill-opacity="1" filter="url(#filter-11)" xlink:href="#path-10"></use>
                 <use fill="url(#linearGradient-9)" fill-rule="evenodd" xlink:href="#path-10"></use>
                 <use fill="black" fill-opacity="1" filter="url(#filter-12)" xlink:href="#path-10"></use>
-                <path stroke-opacity="0.4" stroke="#FFFFFF" stroke-width="2" d="M389.0019,107.517886 L389.000072,132.999918 L379.09561,132.999104 C365.764626,120.847847 348.416025,114 330,114 C311.583975,114 294.235374,120.847847 280.90439,132.999104 L270.999965,132.999918 L270.999078,107.517158 C287.922826,94.9108909 308.436661,88 330,88 C351.563763,88 372.077977,94.911164 389.0019,107.517886 Z" stroke-linejoin="square"></path>
+                <path stroke-opacity="0.4" stroke="#FFFFFF" stroke-width="2" d="M389.001899,107.517887 L389.000072,132.999918 L379.09561,132.999104 C365.764626,120.847846 348.416026,114 330,114 C311.583974,114 294.235374,120.847846 280.90439,132.999104 L270.999059,132.999918 L270.999059,107.517171 C287.922826,94.9108909 308.436661,88 330,88 C351.563763,88 372.077978,94.9111642 389.001899,107.517887 Z" stroke-linejoin="square"></path>
             </g>
             <g id="Lens-L">
                 <use fill="black" fill-opacity="1" filter="url(#filter-15)" xlink:href="#path-14"></use>

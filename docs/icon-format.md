@@ -126,7 +126,8 @@ Format 1 (the format 2 folder, with `layers/`, is in [Format 2](#format-2-layere
 ```
 apps/<id>/
   icon.json              manifest
-  background.svg         background (1024 canvas, fills at least the body)
+  background.svg         background (1024 canvas, fills at least the body; a gradient spans the body,
+                         y 100 → 924, as the body style of the Apps Kit `Icon / Background` does)
   foreground.svg         foreground (1024 canvas)
   background-dark.svg    optional: background for dark themes
   foreground-dark.svg    optional: foreground for dark themes
@@ -578,6 +579,14 @@ instances named `hand-hour`, `hand-minute`, `hand-second`, `cap`, from the full-
 artboards have the same ids in the same order; a `-dark.svg` is exported only where the dark
 group differs. Properties live only in `icon.json`; the ids in Sketch and in the manifest must
 match one to one. `Grid / Overlay` is not exported.
+
+Exported shapes follow two rules, so that the SVG renders as the artboard does. A filled shape has no
+inside border: the SVG export draws it as a centred stroke on an inset copy of the shape and shrinks
+the fill with it, which leaves a see-through rim half the border wide; the border is a separate
+`<name> Rim` shape (no fill, no shadow) right above the filled one (Clock's hands and cap). A shape
+with a gradient is not a boolean group: Sketch maps the gradient to the box before the boolean
+operation, the export to the final shape; it is a flattened path with the gradient set on its own box
+(Mustache's glasses bridge).
 
 ### Format 1 icons
 
