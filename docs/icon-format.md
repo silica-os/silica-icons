@@ -43,9 +43,10 @@ Calendar or Photos) fill the whole body.
 
 It is the symbol system ([`symbol-format.md`](symbol-format.md)) scaled to the 1024 canvas
 with **1 u = 30 px**: the Ø 600 circle keyline is the Ø 20 u circle of the symbols, the
-Regular stroke (1.5 u) is 45 px. In `design/app-icons.sketch` the symbol `Grid / Golden 1024`
-(light blue) draws it over `Grid / Overlay` (pink): Grid page and `Golden overlay` layer in
-every Grid Check artboard.
+Regular stroke (1.5 u) is 45 px. The design source, the Silica 1.0 Amalfi Apps Kit (Sketch), has
+the `Grid / Overlay` symbol (Grid page, artboard `Grid / Icon 1024`; a hidden instance in every icon
+artboard). The golden grid symbol `Grid / Golden 1024` exists only in the legacy
+`design/app-icons.sketch`.
 
 ### The existing keylines
 
@@ -157,8 +158,8 @@ same rule, without changing shape, colors or proportions.
 Vertical gradient of sheets and folders: measured in the reference file manager at large icons (Rec. 709
 luminance between 10 % and 90 % of the front panel height, away from edges and symbols), the
 folder drops by about 27 out of 255 (RGB 127 200 243 at the top, 96 174 225 at the bottom) and
-the sheet without a preview does not drop (245 uniform). The sheets therefore go from `#FFFFFF`
-to `#F8F9FB` (drop ≈ 4) and the folders have only two
+the sheet without a preview does not drop (245 uniform). The sheets go from `#FFFFFF`
+to `#EBEFF7` (drop ≈ 16, by design choice; Apps Kit `Files / File 1024`, layer `back`) and the folders have only two
 steps, with half the measured drop by design choice (panel `#82C4FD` to `#68B0FA`, drop ≈ 16;
 back `#4497F8` to `#3589F1`), against
 ≈ 31 when they followed the measure and ≈ 64 for folders and ≈ 12 for sheets before.
@@ -388,9 +389,9 @@ generic folder, see Principle):
 
 Reference: `tools/compose.py`, `compose_badges(icon, names, dark)`.
 
-`design/app-icons.sketch`: the file types, volumes and badges are in the Icons page (rows from
-y 15280: files, volumes, badges), in Grid Check with the grids and in Showcase Files in light
-and dark (from y 19200, one row per icon).
+Apps Kit: the generic file and folder, volumes and badges are artboards in the Icons page, one row
+per icon with the dark variant beside it (`Files / Folder 1024`, `Files / Folder Full 1024`,
+`Files / File 1024` from y 25852; volumes and badges from y 47208).
 
 ### Generic folder
 
