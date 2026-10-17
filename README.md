@@ -80,9 +80,9 @@ thumbnail generator in silica-desktop).
 
 ## Contents
 
-- `apps/`: 18 apps (apps, calculator, calendar, clock, disks, fonts, mail, mission-control, mustache,
-  notes, password-manager, photo-viewer, photos, reminders, screenshot, settings, terminal,
-  text-editor) with dark variants and a rendered `icon.png` / `icon-dark.png`; calendar and clock
+- `apps/`: 21 apps (apps, calculator, calendar, camera, clock, disks, fonts, mail, messages,
+  mission-control, music, mustache, notes, password-manager, photo-viewer, photos, reminders,
+  screenshot, settings, terminal, text-editor) plus the Silica logo (`silica`), with dark variants and a rendered `icon.png` / `icon-dark.png`; calendar and clock
   are dynamic.
 - `files/`: one folder in three layers (back, middle sheet shown when it has items, front), one generic file in
   two layers (back and folded front), 5 volumes (internal disk,
