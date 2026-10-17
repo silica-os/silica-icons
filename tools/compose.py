@@ -3,9 +3,15 @@ and writes a check sheet. Usage:
 python tools/compose.py [--dark] [--appearance light|clear|tinted] [--accent #rrggbb] [--size N] [--out file.png]
 
 App icons in format 2 (`icon.json` "format": 2, `layers/`) are composed in the four appearances of
-docs/icon-format.md, Format 2 (light, dark, clear, tinted; `--dark` picks the dark form). Format 1 icons
+docs/icon-format.md, Format 2 (light, dark, clear, tinted). `--dark` picks the dark form of light and
+tinted; clear exists only in light, so `--appearance clear --dark` is refused. Format 1 icons
 are composed as before; `--appearance clear|tinted` does not apply to them (their clear and tinted
 looks are the pre-rendered PNGs). The cast shadows and the rim are drawn by the icon service, not here.
+
+Rendering: app icons are clipped with the Sketch body path (`tools/body.svg`); every SVG is rendered by
+resvg directly at the final size (clock hands already turned, never resampled) with its filter regions
+widened to the shape's reach, since Sketch draws shadows unclipped (see `prepare_svg`); layers are
+composited in float with the 'over' operator and the body mask is applied once, in float.
 
 Layered file icons (`files/file-generic`, `files/folder-generic`) are composited from their layers only, in
 manifest order; the `when: not-empty` layer (folder `middle`) is drawn when `full=True`. Symbols, text and
@@ -15,29 +21,176 @@ Badges (`badges/`) are placed on top of an already composed icon with `compose_b
 Dependencies: pillow, resvg-py, numpy. The Inter font must be passed with --fonts if the SVGs contain text.
 """
 import argparse
+import functools
 import io
 import json
+import math
+import re
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import numpy as np
 import resvg_py
-from PIL import Image, ImageChops, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
 ACCENT = "#0e77e6"  # Accent/Amalfi
 
 
-def render(path: Path, size: int, fonts: list[str]) -> Image.Image:
-    data = resvg_py.svg_to_bytes(svg_path=str(path), width=size, height=size, font_dirs=fonts)
-    return Image.open(io.BytesIO(bytes(data))).convert("RGBA")
+SVG_NS, XLINK_NS = "http://www.w3.org/2000/svg", "http://www.w3.org/1999/xlink"
+ET.register_namespace("", SVG_NS)
+ET.register_namespace("xlink", XLINK_NS)
+NUM = re.compile(r"[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?")
 
 
+def path_points(d: str) -> list[tuple[float, float]]:
+    """Every end and control point of a path (absolute), a superset of its bounding box."""
+    pts: list[tuple[float, float]] = []
+    x = y = sx = sy = 0.0
+    for cmd, args in re.findall(r"([MmLlHhVvCcSsQqTtAaZz])([^MmLlHhVvCcSsQqTtAaZz]*)", d):
+        v = [float(n) for n in NUM.findall(args)]
+        rel = cmd.islower()
+        c = cmd.upper()
+        if c == "Z":
+            x, y = sx, sy
+            continue
+        step = {"M": 2, "L": 2, "T": 2, "H": 1, "V": 1, "C": 6, "S": 4, "Q": 4, "A": 7}[c]
+        for i in range(0, len(v) - step + 1, step):
+            g = v[i:i + step]
+            ox, oy = (x, y) if rel else (0.0, 0.0)
+            if c == "H":
+                x = g[0] + (x if rel else 0)
+            elif c == "V":
+                y = g[0] + (y if rel else 0)
+            elif c == "A":
+                nx, ny = g[5] + ox, g[6] + oy
+                r = max(abs(g[0]), abs(g[1]))
+                pts += [(x - r, y - r), (x + r, y + r), (nx - r, ny - r), (nx + r, ny + r)]
+                x, y = nx, ny
+            else:
+                for j in range(0, step, 2):
+                    pts.append((g[j] + ox, g[j + 1] + oy))
+                x, y = pts[-1]
+            pts.append((x, y))
+            if c == "M" and i == 0:
+                sx, sy = x, y
+    return pts
+
+
+def shape_box(el: ET.Element, ids: dict) -> tuple[float, float, float, float] | None:
+    """Bounding box (x0, y0, x1, y1) of a shape in its own user space, None if unknown (text)."""
+    tag = el.tag.split("}")[-1]
+    f = lambda k, dflt=0.0: float(NUM.match(el.get(k, str(dflt))).group())
+    if tag == "use":
+        ref = ids.get((el.get(f"{{{XLINK_NS}}}href") or el.get("href") or "").lstrip("#"))
+        box = shape_box(ref, ids) if ref is not None else None
+        return box and (box[0] + f("x"), box[1] + f("y"), box[2] + f("x"), box[3] + f("y"))
+    if tag == "path":
+        pts = path_points(el.get("d", ""))
+    elif tag == "rect":
+        pts = [(f("x"), f("y")), (f("x") + f("width"), f("y") + f("height"))]
+    elif tag in ("circle", "ellipse"):
+        rx, ry = (f("r"), f("r")) if tag == "circle" else (f("rx"), f("ry"))
+        pts = [(f("cx") - rx, f("cy") - ry), (f("cx") + rx, f("cy") + ry)]
+    elif tag == "g" and "transform" not in el.attrib:
+        boxes = [shape_box(c, ids) for c in el]
+        if any(b is None for b in boxes):
+            return None
+        pts = [p for b in boxes if b for p in (b[:2], b[2:])]
+    else:
+        return None
+    if not pts:
+        return None
+    xs, ys = zip(*pts)
+    return min(xs), min(ys), max(xs), max(ys)
+
+
+def filter_reach(flt: ET.Element) -> float:
+    """How far (user units) a filter's result can reach past the shape: offsets plus 3 sigma."""
+    reach = 0.0
+    for p in flt.iter():
+        tag = p.tag.split("}")[-1]
+        if tag == "feOffset":
+            reach += abs(float(p.get("dx", 0))) + abs(float(p.get("dy", 0)))
+        elif tag == "feGaussianBlur":
+            reach += 3 * max(float(s) for s in p.get("stdDeviation", "0").split())
+        elif tag == "feMorphology":
+            reach += max(float(s) for s in p.get("radius", "0").split())
+    return reach + 2
+
+
+def prepare_svg(path: Path, rotate: float = 0.0, pivot: tuple[float, float] = (512, 512)) -> str:
+    """The SVG as Sketch draws it, for resvg.
+
+    Filter regions: Sketch draws shadows without a filter region, but its SVG export writes
+    objectBoundingBox regions computed from the shape before boolean operations, so on a
+    flattened shape (Mustache's glasses bridge, many format 1 shadows) resvg, like a browser,
+    clips the shadow. Each filter gets a userSpaceOnUse region of the shape's box grown by the
+    filter's reach (offsets + 3 sigma); filters on text keep their region.
+    `rotate`: the whole drawing turned about `pivot` (degrees, clockwise) at render time. resvg
+    applies feOffset along the canvas axes and ignores the rotation of the user space, so the
+    offsets are turned here too: a baked shadow turns with the hand, as SVG specifies and as on the
+    Sketch artboards, where the hand instances are rotated."""
+    root = ET.fromstring(path.read_bytes())
+    ids = {el.get("id"): el for el in root.iter() if el.get("id")}
+    for el in root.iter():
+        m = re.fullmatch(r"url\(#(.+)\)", el.get("filter", ""))
+        flt = ids.get(m.group(1)) if m else None
+        if flt is None:
+            continue
+        box = shape_box(el, ids)
+        if box is None:
+            continue
+        r = filter_reach(flt)
+        flt.set("filterUnits", "userSpaceOnUse")
+        flt.set("x", f"{box[0] - r:.3f}")
+        flt.set("y", f"{box[1] - r:.3f}")
+        flt.set("width", f"{box[2] - box[0] + 2 * r:.3f}")
+        flt.set("height", f"{box[3] - box[1] + 2 * r:.3f}")
+    if rotate:
+        t = math.radians(rotate)
+        for off in root.iter(f"{{{SVG_NS}}}feOffset"):
+            dx, dy = float(off.get("dx", 0)), float(off.get("dy", 0))
+            off.set("dx", f"{dx * math.cos(t) - dy * math.sin(t):.4f}")
+            off.set("dy", f"{dx * math.sin(t) + dy * math.cos(t):.4f}")
+        turn = ET.Element(f"{{{SVG_NS}}}g", {"transform": f"rotate({rotate:.6f} {pivot[0]} {pivot[1]})"})
+        turn.extend(list(root))
+        for child in list(root):
+            root.remove(child)
+        root.append(turn)
+    return ET.tostring(root, encoding="unicode")
+
+
+SUPERSAMPLE = 4  # samples per pixel side; the render is capped at 4096 px
+
+
+def render(path: Path, size: int, fonts: list[str], rotate: float = 0.0,
+           pivot: tuple[float, float] = (512, 512)) -> Image.Image:
+    """An SVG of the 1024 canvas rendered at `size` (already turned by `rotate`): never a resampled
+    render. It is drawn at SUPERSAMPLE x the side and box-averaged in premultiplied float, which is
+    plain anti-aliasing: it removes most of the conflation seams where Sketch's exported shadows
+    are knocked out under a shape with the same edge (a light hairline around every shadowed
+    shape at 1 sample per pixel)."""
+    k = max(1, min(SUPERSAMPLE, 4096 // size))
+    data = resvg_py.svg_to_bytes(svg_string=prepare_svg(path, rotate, pivot), width=size * k,
+                                 height=size * k, font_dirs=fonts, resources_dir=str(path.parent))
+    img = Image.open(io.BytesIO(bytes(data))).convert("RGBA")
+    if k == 1:
+        return img
+    a = np.asarray(img, dtype=np.float64) / 255
+    pre = np.concatenate([a[..., :3] * a[..., 3:], a[..., 3:]], -1)
+    pre = pre.reshape(size, k, size, k, 4).mean((1, 3))
+    alpha = pre[..., 3:]
+    rgb = np.where(alpha > 0, pre[..., :3] / np.maximum(alpha, 1e-12), 0)
+    return to_image(np.concatenate([rgb, alpha], -1))
+
+
+@functools.lru_cache(maxsize=8)
 def body_mask(size: int) -> Image.Image:
-    # Approximation with a rounded rectangle; the shell uses the superellipse from the spec.
-    m = Image.new("L", (size, size), 0)
-    s = size / 1024
-    ImageDraw.Draw(m).rounded_rectangle((100 * s, 100 * s, 924 * s, 924 * s), radius=215 * s, fill=255)
-    return m
+    """The body (824 at (100, 100), smooth corners) as an 8-bit mask: the Sketch `Icon / Background`
+    Body path exported as `tools/body.svg`, rendered at `size`."""
+    data = resvg_py.svg_to_bytes(svg_path=str(ROOT / "tools" / "body.svg"), width=size, height=size)
+    return Image.open(io.BytesIO(bytes(data))).split()[3]
 
 
 def layer_file(icon_dir: Path, name: str, dark: bool) -> Path:
@@ -65,7 +218,9 @@ def compose(icon_dir: Path, size: int, dark: bool, fonts: list[str], full: bool 
             out.alpha_composite(render(layer_file(icon_dir, hand["file"], dark), size, fonts))
         out.alpha_composite(render(layer_file(icon_dir, dyn["cap"], dark), size, fonts))
     if manifest["kind"] == "app":
-        out.putalpha(ImageChops.multiply(out.split()[3], body_mask(size)))
+        arr = as_array(out)
+        arr[..., 3] *= as_array(body_mask(size))
+        out = to_image(arr)
     return out
 
 
@@ -176,9 +331,7 @@ def background2(icon_dir: Path, spec: dict, size: int, appearance: str, dark: bo
         if "file" in b:
             return as_array(render(icon_dir / b["file"], size, fonts))
         return vertical(size, hex_rgb(b["gradient"][0]), hex_rgb(b["gradient"][1]))
-    if appearance == "clear":
-        if dark:
-            return vertical(size, hex_rgb(GRAPHITE[0]), BLACK, 0.50, 0.55)
+    if appearance == "clear":  # light only
         return vertical(size, WHITE, WHITE, 0.50, 0.25)
     if dark:  # tinted
         return vertical(size, mix(accent, BLACK, 0.62), mix(accent, BLACK, 0.84))
@@ -195,7 +348,7 @@ def transform(px: np.ndarray, mode: str, appearance: str, dark: bool, accent: np
         if mode == "light":
             lo, hi = 200, 255
         else:
-            lo, hi = luma or ((150, 255) if dark else (105, 255))
+            lo, hi = luma or (105, 255)
         rgb = np.repeat(((lo + (hi - lo) * L) / 255)[..., None], 3, -1)
     elif mode == "accent":
         rgb = accent_map(L, accent)
@@ -238,16 +391,18 @@ def hand_angle(unit: str, time: str) -> float:
 
 def compose2(icon_dir: Path, manifest: dict, size: int, appearance: str, dark: bool, accent_hex: str,
              time: str | None, fonts: list[str]) -> Image.Image:
-    """A format 2 app icon in one appearance (light, clear, tinted; `dark` for the dark form)."""
+    """A format 2 app icon in one appearance: light, clear (light only), tinted; `dark` picks the
+    dark form of light and tinted and is ignored for clear."""
+    if appearance == "clear":
+        dark = False  # there is no dark clear appearance
     accent = hex_rgb(accent_hex)
     time = time or manifest.get("fallback", {}).get("time", "10:09:30")
     out = background2(icon_dir, manifest["background"], size, appearance, dark, accent, fonts)
     for layer in manifest["layers"]:
         lay = dict(layer)
         if dark:
-            over_dark = layer.get("dark", {})
-            for k, v in over_dark.items():
-                lay[k] = {**layer.get(k, {}), **v} if k in ("clear", "tinted") else v
+            for k, v in layer.get("dark", {}).items():
+                lay[k] = {**layer.get(k, {}), **v} if k == "tinted" else v
         if lay.get("min_size", 0) > size:
             continue
         role_clear, role_tinted, role_factor = ROLE_MODES[lay["role"]]
@@ -265,21 +420,19 @@ def compose2(icon_dir: Path, manifest: dict, size: int, appearance: str, dark: b
         if not file:
             dark_file = f"layers/{lay['id']}-dark.svg"
             file = dark_file if dark and (icon_dir / dark_file).exists() else f"layers/{lay['id']}.svg"
-        img = render(icon_dir / file, size, fonts)
-        px = transform(as_array(img), mode, appearance, dark, accent, luma)
         dyn = lay.get("dynamic") or {}
-        if dyn.get("kind") == "clock-hand":
-            cx, cy = (v * size / 1024 for v in dyn.get("pivot", [512, 512]))
-            px = as_array(to_image(px).rotate(-hand_angle(dyn["unit"], time), Image.BICUBIC, center=(cx, cy)))
+        angle = hand_angle(dyn["unit"], time) if dyn.get("kind") == "clock-hand" else 0.0
+        # A hand is rendered already turned, at the final size: no resampling of a rendered layer.
+        # The colour transforms are per pixel, so applying them after the turn is the same.
+        img = render(icon_dir / file, size, fonts, angle, tuple(dyn.get("pivot", [512, 512])))
+        px = transform(as_array(img), mode, appearance, dark, accent, luma)
         if mode == "glass":
             out = glass(out, px, size, opacity, {**GLASS, **manifest.get("glass", {})})
             continue
-        px = px.copy()
         px[..., 3] *= opacity
         out = over(out, px, lay.get("blend", "normal"))
-    img = to_image(out)
-    img.putalpha(ImageChops.multiply(img.split()[3], body_mask(size)))
-    return img
+    out[..., 3] *= as_array(body_mask(size))
+    return to_image(out)
 
 
 def compose_badges(icon: Image.Image, names: list[str], dark: bool,
@@ -327,6 +480,8 @@ def main() -> None:
     ap.add_argument("--fonts", action="append", default=[])
     ap.add_argument("--out", default="build/contact-sheet.png")
     a = ap.parse_args()
+    if a.appearance == "clear" and a.dark:
+        ap.error("clear exists only in light: drop --dark")
     dirs = sorted(p.parent for p in ROOT.glob("*/*/icon.json"))
     cols = 8
     cell = a.size + 24
