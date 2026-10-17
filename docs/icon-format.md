@@ -13,7 +13,7 @@ File icons (`files/`), instead, are free-form objects (folders, documents, Trash
 applies no mask or body, only the shadow of the context. For file icons **the side is the
 full canvas**: a 64 pt file icon is the 1024 canvas drawn at 64 pt, with no reductions (no
 824 body, no factors like the former 92 %); the bands that depend on the side (`min_size` of
-the folder symbol, of the label and of the badges) are compared with this side. In the Dock a
+the badges) are compared with this side. In the Dock a
 place (folder, Trash) uses the canvas of the neighboring apps, the one that overflows the body
 by 100/824.
 
@@ -181,7 +181,7 @@ hides most of it: what shows is a soft halo along the fold's lower and left edge
 
 **No dark variants.** Sheets and folders are the same in every theme, as in the reference:
 there is no `-dark` artwork for `file-generic` or `folder-generic` (the Apps Kit has no dark
-sheet or folder, 2026-10-17), and their glyph, label and engraving colors are the same in
+sheet or folder, 2026-10-17), and they are the same in
 Light and Dark. The volumes, the Trash and the badges keep theirs.
 
 **Layered sheet and folder.** `file-generic` is two layers, `back` (the sheet) and `front`
@@ -235,21 +235,20 @@ when it does not need to change.
 | `kind` | `app` (shape imposed by the shell) or `file` (free-form) |
 | `keyline` | `square`, `circle`, `circle-small`, `portrait`, `landscape`, `full`; for volumes `volume` (documentation only: the shell does not clip `file` icons) |
 | `layers` | bottom to top: one `background` and 1 to 4 foreground layers |
+| `content_area` | optional, `file-generic` and `folder-generic`: `[x, y, w, h]` in the 1024 canvas, the flat area where a generator can put content; informative |
 | `shadow` | shadow the shell draws under the layer: `neutral`, `chromatic` (taken from the layer color) or `none` |
 | `variants.dark` | replacement layers for Dark, Clear Dark and Tinted Dark |
 | `dynamic` | content updated at runtime, see below |
 | `rendered` | the whole icon as designed, with its relief, shadows and glass, PNG at 1024 from the design file's layer styles, one per theme: `default`, `dark`, `clear`, `clear-dark`, `tinted`, `tinted-dark`. Clear renders have a translucent body (the shell adds the backdrop blur behind) and a grey foreground; Tinted renders use the default blue tint, so the shell recolours them only for another tint. The SVG layers stay for custom tints and dynamic content |
 
 `file` icons have a single `artwork` layer (`icon.svg`, `icon-dark.svg`) and no
-background, except `file-generic` (`back`, `glyph`, `front`) and `folder-generic` (`back`,
+background, except `file-generic` (`back`, `front`) and `folder-generic` (`back`,
 `middle`, `front`), drawn bottom to top.
 
 | Layer field | Meaning |
 | --- | --- |
 | `file` | SVG in the icon folder; a dark variant, where there is one, is in `variants.dark.<role>` |
-| `dynamic` | `true`: no file, the slot where the renderer draws the dynamic content (the glyph of `file-generic`) |
 | `when` | `not-empty`: drawn only for a folder with at least one item (`middle` of `folder-generic`) |
-| `tint` | folders: `true` if the folder tint recolors the layer |
 
 ## Themes
 
@@ -311,161 +310,27 @@ centred in the red disc. Updates at local midnight and on date or time zone chan
 
 ### Generic file
 
-`files/file-generic` is the only document icon. There are no per-type icons: the renderer
-(the thumbnail service, Mustache, the Dock) composes every file icon from the two layers of
-the sheet, a glyph between them and the extension it writes itself.
+`files/file-generic` is the only document icon, in two layers on the 1024 canvas:
 
 ```json
 "layers": [
-  { "role": "back", "file": "back.svg" },
-  { "role": "glyph", "dynamic": true },
+  { "role": "back",  "file": "back.svg" },
   { "role": "front", "file": "front.svg" }
 ],
-"dynamic": {
-  "type": "file-glyph",
-  "glyph": { "box": [262, 262, 500, 500],
-             "symbol": { "sizes": [ { "min_size": 128, "weight": "light" },
-                                    { "min_size": 64,  "weight": "regular" },
-                                    { "min_size": 16,  "weight": "semibold" } ] },
-             "app_icon": { "body": [303.67, 303.67, 416.67, 416.67] } },
-  "label": { "font": "Inter", "size": 111.67, "weight": 500, "tracking": 0,
-             "box": [270.64, 763.7, 482.72, 136.04], "case": "upper",
-             "max_chars": 5, "max_width": 482.72, "overflow": "shrink", "min_size": 32 },
-  "label_alone": { "font": "Inter", "size": 175.53, "weight": 900, "tracking": 0,
-                   "box": [219.08, 362.8, 585.84, 212.83], "case": "upper",
-                   "max_chars": 5, "max_width": 585.84, "overflow": "shrink", "min_size": 32 },
-  "kinds": { "pdf": { "glyph": "doc-text", "color": "#e2332b" }, "code": {...}, ... },
-  "colors": { "document": {...}, "data": {...}, "code": {...},
-              "archive": {...}, "media": {...}, "other": {...} },
-  "overrides": { "json": "data", "epub": "document", "blend": "media", ... },
-  "types": {
-    "mime": { "application/pdf": "pdf", "text/csv": "spreadsheet",
-              "application/json": { "category": "data" }, ... },
-    "extensions": { "pdf": "pdf", "xlsx": "spreadsheet", "sh": "executable", ... }
-  },
-  "fallback": "unknown"
-}
+"content_area": [230, 270, 564, 630]
 ```
 
-**Order** (bottom to top): `back` → glyph → `front` → label. The front is the folded corner
-and the shadow it casts on the page; nothing the renderer draws reaches it.
+**Order** (bottom to top): `back` (the sheet, 684 × 904 at (170, 60)) → [content drawn by the
+generator] → `front` (the folded corner with its soft shadow on the page). `icon.png` is the
+plain sheet (back and front). `content_area` is `[x, y, w, h]` in the canvas: the flat part of
+the sheet, below the fold and clear of the rounded corners, where content can go. It is
+informative only.
 
-Measures on the 1024 canvas (fraction of the side in brackets; the sheet is 684 × 904 at
-(170, 60), the fold covers x 650…854, y 60…264):
-
-| Element | Box (x, y, w, h) | Details |
-| --- | --- | --- |
-| Glyph box | 262, 262, 500, 500 (0.2559, 0.2559, 0.4883, 0.4883) | centred at (512, 512); the widest of the former type figures (500–506) |
-| Symbol | the symbol's 24 u canvas fills the glyph box: 1 u = 20.83 (0.0203) | live area (20 u) 416.67 at (303.67, 303.67) (0.4069 at 0.2966) |
-| App icon | the composed app icon with its 824 body on 303.67, 303.67, 416.67, 416.67 | scale 0.50566: the 1024 app canvas is 517.8 at (253.10, 253.10) (0.5057 at 0.2472) |
-| Label (with a glyph) | 270.64, 763.7, 482.72, 136.04 (0.2643, 0.7458, 0.4714, 0.1329) | Inter Medium 500 (`opsz` 14), size 111.67 (0.1091), baseline y 872.34 (0.8519) |
-| Label alone (no glyph) | 219.08, 362.8, 585.84, 212.83 (0.2139, 0.3543, 0.5721, 0.2078) | Inter Black 900, size 175.53 (0.1714), baseline y 533.06 (0.5206) |
-
-- **Symbol**: `symbols/<weight>/<glyph>.svg`, `currentColor` replaced by the kind's `color`,
-  flat (no engraving, no shadow), opacity 1. The weight is the first `sizes` band with
-  `min_size` ≤ icon side in pt (the full canvas, see Principle): Light from 128, Regular from
-  64, Semibold from 16; below 16 no glyph. Stroke in the canvas: Light 24.6, Regular 31.3,
-  Semibold 44.8 (1.18, 1.5, 2.15 u).
-- **App icon**: instead of a symbol the renderer may put an app icon (the document of an app
-  that owns its type, an app bundle): composed as in the Dock (shape, rim and glass of the
-  current theme, no Dock shadow), its body fitted to `app_icon.body`. It is not recolored.
-- **Colors**: the same in Light and Dark (the sheet does not change). The symbol and the
-  label take the kind's `color`; with an app icon or without a glyph the label takes the
-  category color (`colors`, see below).
-- **Label**: the extension without the dot, uppercase (`case`), centered horizontally in the
-  `box`, the natural Inter line (1.2102 × size) centered vertically, so the baseline is at
-  y + h/2 − 0.605 × size + 0.96875 × size. Up to `max_chars` (5) characters; wider than
-  `max_width` the size shrinks proportionally, always centered (`XHTML`, `WOFF2`, `QCOW2`
-  fit at full size). More than 5 characters or no extension: no label, never truncated (the
-  glyph alone; without a glyph, the `fallback` kind). Below `min_size` (32 pt) no label.
-  For `.tar.<x>` the final extension (`GZ`, `XZ`).
-- **Kinds** (`kinds`, from the former type icons, colors from their manifests):
-
-  | Kind | Glyph | Color | Extensions (summary) |
-  | --- | --- | --- | --- |
-  | `pdf` | `doc-text` | `#e2332b` | pdf |
-  | `text` | `text-align-left` | `#8e8e93` | txt, md, log, rst |
-  | `document` | `doc-text` | `#2f7cf6` | rtf, odt, doc, docx, pages |
-  | `spreadsheet` | `chart-bar` | `#1f9d55` | xlsx, xls, ods, numbers, csv, tsv |
-  | `presentation` | `chart-pie` | `#f2780c` | pptx, ppt, odp, key |
-  | `font` | `text-size` | `#ff2d55` | ttf, otf, ttc, woff, woff2 |
-  | `disk-image` | `disc` | `#8e8e93` | iso, img, dmg, qcow2, vdi, vmdk |
-  | `executable` | `terminal` | `#ff6a00` | sh, bash, zsh, fish, run, bin, appimage |
-  | `web` | `globe` | `#2f7cf6` | html, htm, xhtml, mhtml |
-  | `code` | `code` | `#7a5af8` | rs, dart, py, js, ts, c, go, java, css… |
-  | `archive` | `archive` | `#8e8e93` | zip, tar, gz, xz, zst, 7z, rar, deb, rpm… |
-  | `image` | `photo` | `#2f7cf6` | the common formats |
-  | `audio` | `music-note` | `#ff2d55` | the common formats |
-  | `video` | `film` | `#8e8e93` | the common formats |
-  | `unknown` | `question` | `#8e8e93` | fallback: no glyph and no usable extension |
-
-  The PDF kind keeps the red of the former PDF pill; its label is red like the glyph.
-
-- **Category color** (only without a kind: app icon or label alone), in order: the
-  extension's `overrides`, then the `category` of the `types.mime` entry, then the category
-  of the MIME type (shared-mime-info): `text/*` and office documents → `document`; JSON, XML,
-  YAML, CSV, databases → `data`; sources and scripts → `code`; archives and packages →
-  `archive`; `image/*`, `audio/*`, `video/*`, fonts → `media`; everything else → `other`.
-  `overrides` maps a single extension to a category or a color (`{"json": "data"}`,
-  `{"sketch": {"color": "#f7b500"}}`).
-- `types` is **the** map of the repo (type → kind); whoever resolves a file's icon
-  (SilicaIcon, Mustache, the Dock, the thumbnail service) keeps no map of its own. A
-  `types.mime` entry is a kind (`"text/csv": "spreadsheet"`) or no kind with a category
-  (`"application/json": {"category": "data"}`: label alone). Resolution order for a regular
-  file:
-  0. the MIME type is brought to its canonical name with the shared-mime-info `aliases`
-     (`text/xml` → `application/xml`, `text/x-yaml` → `application/yaml`);
-  0b. if the type comes only from the name and `globs2` gives several types of the same
-     weight for that extension (ambiguous name: `.ts` is TypeScript, Qt Linguist or MPEG-TS
-     depending on the system), step 4 (`types.extensions`) applies before steps 1–3; if the
-     content decides the type (magic), the normal order stays;
-  1. the MIME type (shared-mime-info, from content and name) in `types.mime`, exact;
-  2. the same with the subtype `*` (`image/*`, `audio/*`, `video/*`, `font/*`);
-  3. the parents of the type (`sub-class-of` of shared-mime-info, in order), repeating 1 and 2:
-     a `text/x-…` type without an entry stays text and not code only if no parent is in the map;
-  4. the lowercase extension in `types.extensions` (the last one after the dot; for `.tar.<x>`
-     names the final extension applies, which is already in the map as an archive);
-  5. otherwise no kind: label alone in the category color; without an extension or beyond
-     `max_chars`, the `fallback` kind.
-  An executable without an extension (`x` bit and type `application/x-executable`,
-  `application/x-pie-executable`, `application/x-shellscript`) gets `executable` at
-  step 1; a file with the `x` bit but of another type (a `.py`) keeps the kind of its type.
-- **An explicit entry always wins over the parents.** Step 3 follows `sub-class-of`, and in
-  shared-mime-info many data formats descend from code or text types:
-  `application/json` is a subclass of `application/json5` → `application/ecmascript` →
-  `text/javascript` (it would get `code`), `application/xml`, `application/yaml`,
-  `application/toml`, `application/sql`, `text/calendar` and `text/vcard` of `text/plain`
-  (they would get `text`), EPUB, ODF documents without a kind and the Apple formats of
-  `application/zip` (they would get `archive`). For these `types.mime` has an explicit
-  entry, because it is deterministic: it does not depend on the database version or on which
-  parent is met first, and a `"json": "data"` in `overrides` alone would never be enough,
-  because `overrides` counts only when no kind was found. An explicit entry
-  also covers the children (`application/geo+json`, `application/ld+json` go through
-  `application/json`; the `+xml` types through `application/xml`). The added entries (from the
-  shared-mime-info database, main branch, October 2026):
-  - category `data`: `application/json`, `application/json5`, `application/xml`,
-    `application/xml-dtd`, `application/yaml`, `application/toml`, `application/sql`,
-    `text/calendar`, `text/vcard`, KMZ, ODF databases;
-  - category `document`: Jupyter notebooks (`application/x-ipynb+json`), EPUB, FictionBook,
-    CBZ/CBR comics, PostScript, XPS and OpenXPS, TeX, e-mail (`message/rfc822`), ODF drawings,
-    charts and formulas, Visio, OpenOffice 1 Draw and Math, HWPX;
-  - category `media`: ODF image, `model/3mf`;
-  - kinds: ODF flat XML (`fodt`, `fods`, `fodp`), Office templates and macro-enabled
-    variants (`dotx`, `dotm`, `xltx`, `xltm`, `potx`, `potm`, `ppsx`, `ppsm`, `sldx`, `sldm`),
-    Pages, Numbers and Keynote, OpenOffice 1 Writer, Calc and Impress → `document`,
-    `spreadsheet`, `presentation`; TypeScript (`application/typescript`, which
-    shared-mime-info makes descend from `application/x-executable`), Dart, C#, Julia, Elixir,
-    Erlang, Haskell, Nim, OCaml, Sass and Scala → `code` (otherwise `text/plain` would make
-    them text, even though their extension is in `types.extensions`).
-
-  Left to the parents, on purpose: ZIP packages (`appx`, `msix`, `xpi`, `oxt`, `pkpass`)
-  are archives; the other sources without an entry (Fortran, Pascal, Lisp…) and the text
-  formats (subtitles, patches, systemd units) stay `text`; the types that derive from a
-  kind (`pptm` from `pptx`, EXE and DLL from `application/x-executable`) take its kind.
+Composition (symbols, text, tints, type mapping) belongs to the thumbnail generator in
+silica-desktop; this repo only provides the layers.
 
 Design source: the Silica 1.0 Amalfi Apps Kit (Sketch), artboard `Files / File 1024`, layers
-`Sheet` (→ `back`) and `Fold` (→ `front`). `icon.png` is the plain sheet (back and front).
-Reference: `tools/compose.py`, `compose_file(dir, side, dark, ext, kind, category, app_icon)`.
+`Sheet` (→ `back`) and `Fold` (→ `front`).
 
 ### Volumes
 
@@ -502,7 +367,7 @@ for implementers.
 | `cloud` | blue cloud with a down arrow | bottom right | the content is not on disk: stated by whoever lists the files (a sync provider, a GVfs or rclone mount with network-only files). There is no freedesktop standard: Mustache shows it only when the source reports it |
 
 Position and size (icon 1024 canvas; icon side in pt, that is the full canvas, as for the
-generic folder and the label, see Principle):
+generic folder, see Principle):
 
 | Icon side | Badge side | Box, bottom left | Box, bottom right | How many |
 | --- | --- | --- | --- | --- |
@@ -521,7 +386,7 @@ generic folder and the label, see Principle):
   0.28; the geometry has not changed in this version.
 - Composition: the badge's 1024 canvas is scaled by k = side / 824 and shifted so that its body
   (100, 100, 824, 824) coincides with the box: origin of the badge canvas =
-  (x₀ − 100 k, y₀ − 100 k). It is drawn after the icon, after the folder tint and after the
+  (x₀ − 100 k, y₀ − 100 k). It is drawn after the icon and after the
   theme mapping: the badge is not tinted and does not go through Clear or Tinted.
 - Variants: `-dark` in the Dark, Clear Dark and Tinted Dark themes; the light one in the others.
 - Precedence: at the bottom right `unreadable` wins, then `locked`, then `cloud` (the others
@@ -540,105 +405,30 @@ and dark (from y 19200, one row per icon).
 
 ### Generic folder
 
-`files/folder-generic` is the folder on which the shell (and Mustache) engraves a symbol from
-`symbols/`: the special folders (Documents, Downloads, Pictures, Home…) and folders with a
-tint. It is the only folder icon: a plain folder is the same icon without a symbol. The
-layers carry no symbol.
+`files/folder-generic` is the only folder icon, in three layers on the 1024 canvas:
 
 ```json
 "layers": [
-  { "role": "back",   "file": "back.svg",   "tint": true },
-  { "role": "middle", "file": "middle.svg", "when": "not-empty", "tint": false },
-  { "role": "front",  "file": "front.svg",  "tint": true }
-]
+  { "role": "back",   "file": "back.svg" },
+  { "role": "middle", "file": "middle.svg", "when": "not-empty" },
+  { "role": "front",  "file": "front.svg" }
+],
+"content_area": [94, 353, 836, 480]
 ```
 
-**Order** (bottom to top): `back` → `middle` → `front` → symbol (engraving). `middle` (the
-white sheet, 840 × 620 at (92, 230), visible from y 230 to the front panel's top at 293) is
-drawn only when the folder has at least one item (`when: not-empty`; it replaces the former
-`full` variant); an empty folder, or one whose content cannot be read, is `back` + `front`.
-`icon.png` is the empty folder, `icon-full.png` the folder with `middle`, both without symbol
-and tint.
+**Order** (bottom to top): `back` (back panel with the tab) → `middle` → `front` (front panel)
+→ [content drawn by the generator]. `middle` (the white sheet, 840 × 620 at (92, 230), visible
+from y 230 to the front panel's top at 293) is drawn only when the folder has at least one item
+(`when: not-empty`); an empty folder is `back` + `front`. `icon.png` is the empty folder,
+`icon-full.png` the folder with `middle`. `content_area` is `[x, y, w, h]` in the canvas: the
+flat part of the front panel (956 × 599 from (34, 293)), clear of its corners. It is
+informative only.
 
-```json
-"dynamic": {
-  "type": "folder-symbol",
-  "symbol": {
-    "box": [354, 434, 316, 316],
-    "sizes": [
-      { "min_size": 128, "weight": "light",    "scale": 1 },
-      { "min_size": 64,  "weight": "regular",  "scale": 1 },
-      { "min_size": 32,  "weight": "semibold", "scale": 1,     "highlight": false },
-      { "min_size": 16,  "weight": "semibold", "scale": 1.272, "highlight": false }
-    ]
-  },
-  "effect": { "color": "#1a64c8", "opacity": 0.78, "highlight": "#ffffff",
-              "highlight_opacity": 0.5, "offset": 4 },
-  "tint": {
-    "luminance": [0.35, 0.85], "shade": 0.72, "glow": 0.5, "layers": ["back", "front", "symbol"],
-    "labels": { "red": "#f2382e", "orange": "#f98a17", "yellow": "#f5c400", "green": "#2fb350",
-                "blue": "#2f7cf6", "purple": "#a052e0", "gray": "#8e8e93" }
-  },
-  "folders": { "HOME": "house", "DESKTOP": "display", "DOCUMENTS": "doc-text",
-               "DOWNLOAD": "arrow-down-circle", "MUSIC": "music-note", "PICTURES": "photo",
-               "VIDEOS": "film", "TEMPLATES": "doc-plus", "PUBLICSHARE": "share",
-               "APPLICATIONS": "square-grid-2x2", "LIBRARY": "books-vertical", "SHARED": "person-2",
-               "NETWORK": "network" },
-  "fallback": null
-}
-```
-
-Proportions (1024 canvas, folder keyline):
-
-| Measure | Value | Where it comes from |
-| --- | --- | --- |
-| Front panel | 956 × 599 from (34, 293), center (512, 592.5) | Amalfi folder (`front`); formerly 944 × 619 from (40, 273.1) |
-| Symbol live area (Ø 20 u) | 263.5 | 230 (series A, 600 / φ²) on the 824 folder, × 1.1456 |
-| Symbol canvas (24 u), `box` | 316 × 316 at (354, 434) (0.3457, 0.4238, 0.3086), center (512, 592) on the front panel: 1 u = 13.17 px | live area × 24 / 20 |
-| Stroke | Light 15.6 · Regular 19.8 · Semibold 28.3 | 1.18 · 1.5 · 2.15 u: on the 824 folder they were 13.6 · 17.3 · 24.7, the thicknesses 13.5 and 17 of the series |
-| Small symbol (`scale` 1.272) | canvas 402, live area 335 | × √φ |
-| Engraving (`offset`) | 4 px, at least half a rendered pixel | ≈ Light stroke / φ³ |
-
-- **Symbol**: `symbols/<weight>/<name>.svg` from the same repo, colored in place of
-  `currentColor`, centered in `box` and scaled by `scale` around the center. The band is the
-  first of `sizes` with `min_size` ≤ icon side in pt (the full canvas, see Principle);
-  below the last one (16 pt) the symbol is not drawn. The weight grows as the icon shrinks so
-  that the rendered stroke stays between 1 and 4 px or so: Light from 128, Regular from 64,
-  Semibold below, and below 32 even larger (× √φ).
-- **Engraved effect** (`effect`, one for every theme): first the copy of the symbol in `highlight` with
-  `highlight_opacity`, shifted down by `offset` (the lower edge of the engraving catches the
-  light), then the symbol in `color` with `opacity`. Below 64 pt (`"highlight": false`) only
-  the symbol: the half-pixel reflection would smear it.
-- **Special folders** (`folders`): the keys are those of `xdg-user-dirs`
-  (`XDG_<KEY>_DIR` in `~/.config/user-dirs.dirs`: DESKTOP, DOCUMENTS, DOWNLOAD, MUSIC,
-  PICTURES, VIDEOS, TEMPLATES, PUBLICSHARE) plus five Silica keys: `HOME` (the user's
-  folder), `APPLICATIONS` (`~/Applications` and the `applications` folders of the XDG data),
-  `LIBRARY` (`~/.local/share`, the user's library), `SHARED` (shared folder) and
-  `NETWORK` (network folder). The last two have no fixed path: they are given by whoever knows
-  the folder (Mustache knows whether it is a network mount or a share). A folder that is not
-  among these, or a symbol that does not exist in `symbols/`, gets `fallback`: `null`, the
-  folder without a symbol. The Trash has an icon of its own. Mustache can also pass any symbol from `symbols/`.
-- **Tint** (`tint`): a custom `#rrggbb` color or the name of a label in `labels`.
-  The layers listed in `tint.layers` (`back`, `front` and the engraved symbol with its
-  highlight; never `middle`, which stays white) go through a ramp on luminance: L = 0.2126 R +
-  0.7152 G + 0.0722 B (sRGB, 0–1); from `luminance[0]` to `luminance[1]` the color goes from
-  tint × `shade` to the tint lightened toward white by `glow` (outside the interval it stops
-  at the extremes). It is linear, so it is a 4 × 5 color matrix (`ColorFilter.matrix`): the
-  symbol stays darker than the panel and the reflection lighter, with the same color. Because
-  the ramp is affine, tinting each listed layer and then compositing equals tinting the
-  composed back + front + symbol. Without a tint the folder stays the blue drawing, with no
-  ramp. Engraving (`effect`): `#1a64c8` at 0.78 over a white copy at 0.5 shifted down by 4
-  (Light and Dark alike).
-- **Other themes**: Clear and Tinted (Light and Dark) apply their rule to the folder already
-  composed with the symbol (luminance mapped, see Themes), so the symbol stays the engraving
-  darker than the panel; in the Clear themes the engraving reflection is removed
-  (`highlight_opacity` 0), because the glass already has its border. The custom tint applies
-  only in Default and Dark: Tinted uses the theme tint for all folders. Dark uses the same
-  folder, engraving and tint ramp as Default.
+Composition (symbols, text, tints, special folders) belongs to the thumbnail generator in
+silica-desktop; this repo only provides the layers.
 
 Design source: the Silica 1.0 Amalfi Apps Kit (Sketch), artboards `Files / Folder 1024` and
-`Files / Folder Full 1024`, layers `Back`, `Sheet` (→ `middle`) and `Front`. Reference:
-`tools/compose.py`, `compose_folder(dir, side, dark, symbol, tint, full)`.
+`Files / Folder Full 1024`, layers `Back`, `Sheet` (→ `middle`) and `Front`.
 
 ## Icons without layers
 

@@ -63,7 +63,8 @@ venv/bin/python tools/compose.py --dark --fonts <folder with Inter> --out build/
 ```
 
 `compose.py` recomposes every icon from its layers as the shell would and writes a check
-sheet.
+sheet (layers only: symbols, text and tints of file and folder thumbnails belong to the
+thumbnail generator in silica-desktop).
 
 ## Contents
 
@@ -71,10 +72,8 @@ sheet.
   notes, password-manager, photo-viewer, photos, reminders, screenshot, settings, terminal,
   text-editor) with dark variants and a rendered `icon.png` / `icon-dark.png`; calendar and clock
   are dynamic.
-- `files/`: one folder in three layers (back, middle sheet shown when it has items, front;
-  symbol and tint applied by the shell), one generic file in two layers (back and folded
-  front; the shell puts a symbol or app icon between them and writes the extension, with the
-  type → kind map), 5 volumes (internal disk,
+- `files/`: one folder in three layers (back, middle sheet shown when it has items, front), one generic file in
+  two layers (back and folded front), 5 volumes (internal disk,
   external, network server, mounted disk image, optical disc), empty and full Trash. For file icons the side is the full
   canvas: sheets, folders, volumes and Trash fill almost all of it, as in the reference (document keyline 684 × 904, folder 956 × 776,
   volume 944 × 583, Trash 656 × 824).

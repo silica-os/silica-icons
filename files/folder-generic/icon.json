@@ -6,102 +6,25 @@
   "layers": [
     {
       "role": "back",
-      "file": "back.svg",
-      "tint": true
+      "file": "back.svg"
     },
     {
       "role": "middle",
       "file": "middle.svg",
-      "when": "not-empty",
-      "tint": false
+      "when": "not-empty"
     },
     {
       "role": "front",
-      "file": "front.svg",
-      "tint": true
+      "file": "front.svg"
     }
   ],
   "variants": null,
-  "dynamic": {
-    "type": "folder-symbol",
-    "symbol": {
-      "box": [
-        354,
-        434,
-        316,
-        316
-      ],
-      "sizes": [
-        {
-          "min_size": 128,
-          "weight": "light",
-          "scale": 1
-        },
-        {
-          "min_size": 64,
-          "weight": "regular",
-          "scale": 1
-        },
-        {
-          "min_size": 32,
-          "weight": "semibold",
-          "scale": 1,
-          "highlight": false
-        },
-        {
-          "min_size": 16,
-          "weight": "semibold",
-          "scale": 1.272,
-          "highlight": false
-        }
-      ]
-    },
-    "effect": {
-      "color": "#1a64c8",
-      "opacity": 0.78,
-      "highlight": "#ffffff",
-      "highlight_opacity": 0.5,
-      "offset": 4
-    },
-    "tint": {
-      "luminance": [
-        0.35,
-        0.85
-      ],
-      "shade": 0.72,
-      "glow": 0.5,
-      "labels": {
-        "red": "#f2382e",
-        "orange": "#f98a17",
-        "yellow": "#f5c400",
-        "green": "#2fb350",
-        "blue": "#2f7cf6",
-        "purple": "#a052e0",
-        "gray": "#8e8e93"
-      },
-      "layers": [
-        "back",
-        "front",
-        "symbol"
-      ]
-    },
-    "folders": {
-      "HOME": "house",
-      "DESKTOP": "display",
-      "DOCUMENTS": "doc-text",
-      "DOWNLOAD": "arrow-down-circle",
-      "MUSIC": "music-note",
-      "PICTURES": "photo",
-      "VIDEOS": "film",
-      "TEMPLATES": "doc-plus",
-      "PUBLICSHARE": "share",
-      "APPLICATIONS": "square-grid-2x2",
-      "LIBRARY": "books-vertical",
-      "SHARED": "person-2",
-      "NETWORK": "network"
-    },
-    "fallback": null
-  },
+  "content_area": [
+    94,
+    353,
+    836,
+    480
+  ],
   "rendered": {
     "default": "icon.png",
     "full": "icon-full.png"
