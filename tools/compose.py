@@ -2,10 +2,11 @@
 and writes a check sheet. Usage: python tools/compose.py [--dark] [--size N] [--out file.png]
 
 The generic folder (`folder-symbol`) is composed with `compose_folder(dir, size, dark, symbol,
-tint)`: base layer, engraved symbol and tint, with the same rules as the shell.
+tint, full)`: back, middle (only when `full`), front, engraved symbol and tint, with the same
+rules as the shell.
 Badges (`badges/`) are placed on top of an already composed icon with `compose_badges(img, names, dark)`.
-File type icons (`file-type-label`) and the generic file (`file-label`) are composed with
-the extension written by `compose_file(dir, size, dark, ext)`.
+The generic file (`file-glyph`) is composed with `compose_file(dir, size, dark, ext, kind,
+category)`: back, glyph (a symbol of the kind, or `app_icon`), front and the extension label.
 
 Dependencies: pillow, resvg-py. The Inter font must be passed with --fonts if the SVGs contain text.
 """
@@ -49,9 +50,8 @@ def compose(icon_dir: Path, size: int, dark: bool, fonts: list[str]) -> Image.Im
     manifest = json.loads((icon_dir / "icon.json").read_text())
     out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     for layer in manifest["layers"]:
-        if "icon" in layer:
-            # A layer taken from another icon (the sheet of the file type icons): its whole artwork.
-            out.alpha_composite(compose(icon_dir.parent / layer["icon"], size, dark, fonts))
+        if layer.get("dynamic") or layer.get("when"):
+            # Drawn by compose_file / compose_folder (glyph, middle sheet of a full folder).
             continue
         out.alpha_composite(render(layer_file(icon_dir, layer["file"], dark), size, fonts))
     dyn = manifest.get("dynamic") or {}
@@ -98,13 +98,24 @@ def apply_tint(img: Image.Image, m: np.ndarray) -> Image.Image:
 
 
 def compose_folder(icon_dir: Path, size: int, dark: bool, symbol: str | None = None,
-                   tint: str | None = None, fonts: list[str] | None = None) -> Image.Image:
-    """The generic folder at `size` px of canvas: base, engraved symbol (band chosen on the icon
-    side, which for file icons is the full canvas) and tint. `tint` is a #rrggbb color or a label name."""
+                   tint: str | None = None, full: bool = False,
+                   fonts: list[str] | None = None) -> Image.Image:
+    """The generic folder at `size` px of canvas: back, middle sheet (only when `full`, the folder
+    has items), front, engraved symbol (band chosen on the icon side, which for file icons is the
+    full canvas) and tint. `tint` is a #rrggbb color or a label name; it recolours the layers
+    with `"tint": true` and the symbol, never the middle sheet."""
     fonts = fonts or []
     manifest = json.loads((icon_dir / "icon.json").read_text())
     dyn = manifest["dynamic"]
-    out = render(layer_file(icon_dir, manifest["layers"][0]["file"], dark), size, fonts)
+    m = None
+    if tint:
+        m = tint_matrix(dyn["tint"]["labels"].get(tint, tint), dyn["tint"])
+    out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    for layer in manifest["layers"]:
+        if layer.get("when") == "not-empty" and not full:
+            continue
+        img = render(layer_file(icon_dir, layer["file"], dark), size, fonts)
+        out.alpha_composite(apply_tint(img, m) if m is not None and layer.get("tint") else img)
     band = folder_band(dyn, size)
     sym_file = ROOT / "symbols" / (band or {}).get("weight", "regular") / f"{symbol}.svg"
     if symbol and band and sym_file.exists():
@@ -123,11 +134,8 @@ def compose_folder(icon_dir: Path, size: int, dark: bool, symbol: str | None = N
                 if band.get("highlight", True) else "")
         svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">'
                + glow + layer(fx["color"], fx["opacity"], 0) + "</svg>")
-        out.alpha_composite(render_string(svg, size, fonts))
-    if tint:
-        colors = dyn["tint"]["labels"]
-        tint = colors.get(tint, tint)
-        out = apply_tint(out, tint_matrix(tint, dyn["tint"]))
+        sym = render_string(svg, size, fonts)
+        out.alpha_composite(apply_tint(sym, m) if m is not None else sym)
     return out
 
 
@@ -140,14 +148,6 @@ def inter_font(fonts: list[str]) -> Path | None:
             if "Italic" not in f.name:
                 return f
     return None
-
-
-def label_text(label: dict, ext: str | None) -> str | None:
-    """The label text: the extension (without the dot, in the manifest's `case`) if it has 1 to
-    `max_chars` characters; otherwise `no_extension` (null: no label)."""
-    if ext and len(ext) <= label["max_chars"]:
-        return ext.upper() if label.get("case") == "upper" else ext
-    return label.get("no_extension")
 
 
 def draw_label(out: Image.Image, label: dict, text: str, color: str, fonts: list[str]) -> None:
@@ -176,25 +176,67 @@ def draw_label(out: Image.Image, label: dict, text: str, color: str, fonts: list
     out.alpha_composite(layer.resize(out.size, Image.LANCZOS))
 
 
+def glyph_band(bands: list[dict], side: float) -> dict | None:
+    for band in sorted(bands, key=lambda b: -b["min_size"]):
+        if side >= band["min_size"]:
+            return band
+    return None
+
+
 def compose_file(icon_dir: Path, size: int, dark: bool, ext: str | None,
-                 category: str | None = None, fonts: list[str] | None = None) -> Image.Image:
-    """A type icon (`file-type-label`) or the generic file (`file-label`, color from
-    `category`) with the label of extension `ext`, as the shell writes it."""
+                 kind: str | None = None, category: str | None = None,
+                 app_icon: Image.Image | None = None,
+                 fonts: list[str] | None = None) -> Image.Image:
+    """The generic file (`file-glyph`): back, the glyph between back and front, front, then the
+    extension label. The glyph is `app_icon` (an already composed 1024 app icon, its 824 body
+    fitted to `glyph.app_icon.body`) or the symbol of `kind` in its color; without either the
+    label is written alone (`label_alone`, color of `category`). Without a usable extension and
+    without a glyph, the `fallback` kind is used."""
     fonts = fonts or []
-    out = compose(icon_dir, size, dark, fonts)
-    dyn = json.loads((icon_dir / "icon.json").read_text()).get("dynamic") or {}
-    if dyn.get("type") == "file-type-label":
-        label = dyn["label"]
-        color = label["color"]
-    elif dyn.get("type") == "file-label":
-        label = {**dyn["label"], "no_extension": None}
-        cat = dyn["overrides"].get((ext or "").lower(), category or "other")
-        c = cat if isinstance(cat, dict) else dyn["colors"][cat]
-        color = c["color"]
-    else:
+    manifest = json.loads((icon_dir / "icon.json").read_text())
+    dyn = manifest["dynamic"]
+    text = None
+    if ext and len(ext) <= dyn["label"]["max_chars"]:
+        text = ext.upper()
+    if kind is None and app_icon is None and text is None:
+        kind = dyn["fallback"]
+    out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    color = None
+    for layer in manifest["layers"]:
+        if layer["role"] != "glyph":
+            out.alpha_composite(render(layer_file(icon_dir, layer["file"], dark), size, fonts))
+            continue
+        px = size / 1024
+        if app_icon is not None:
+            bx, by, bw, _ = dyn["glyph"]["app_icon"]["body"]
+            k = bw / 824
+            side = max(1, round(1024 * k * px))
+            out.alpha_composite(app_icon.resize((side, side), Image.LANCZOS),
+                                (round((bx - 100 * k) * px), round((by - 100 * k) * px)))
+        elif kind is not None:
+            spec = dyn["kinds"][kind]
+            color = spec["color"]
+            band = glyph_band(dyn["glyph"]["symbol"]["sizes"], size)
+            sym_file = ROOT / "symbols" / (band or {}).get("weight", "regular") / f"{spec['glyph']}.svg"
+            if band and sym_file.exists():
+                x, y, w, h = dyn["glyph"]["box"]
+                inner = re.sub(r"^.*?<svg[^>]*>|</svg>\s*$", "", sym_file.read_text(), flags=re.S)
+                svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">'
+                       f'<g transform="translate({x},{y}) scale({w / 24},{h / 24})">'
+                       + inner.replace("currentColor", color) + "</g></svg>")
+                out.alpha_composite(render_string(svg, size, fonts))
+    if text is None:
         return out
-    text = label_text(label, ext)
-    if text and size >= label.get("min_size", 0):
+    if app_icon is None and kind is None:
+        label = dyn["label_alone"]
+        cat = dyn["overrides"].get(ext.lower(), category or "other")
+        color = (cat if isinstance(cat, dict) else dyn["colors"][cat])["color"]
+    else:
+        label = dyn["label"]
+        if color is None:
+            cat = dyn["overrides"].get(ext.lower(), category or "other")
+            color = (cat if isinstance(cat, dict) else dyn["colors"][cat])["color"]
+    if size >= label.get("min_size", 0):
         draw_label(out, label, text, color, fonts)
     return out
 

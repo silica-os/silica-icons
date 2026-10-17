@@ -5,15 +5,23 @@
   "kind": "file",
   "layers": [
     {
-      "role": "artwork",
-      "file": "icon.svg"
+      "role": "back",
+      "file": "back.svg",
+      "tint": true
+    },
+    {
+      "role": "middle",
+      "file": "middle.svg",
+      "when": "not-empty",
+      "tint": false
+    },
+    {
+      "role": "front",
+      "file": "front.svg",
+      "tint": true
     }
   ],
-  "variants": {
-    "full": {
-      "artwork": "icon-full.svg"
-    }
-  },
+  "variants": null,
   "dynamic": {
     "type": "folder-symbol",
     "symbol": {
@@ -70,7 +78,12 @@
         "blue": "#2f7cf6",
         "purple": "#a052e0",
         "gray": "#8e8e93"
-      }
+      },
+      "layers": [
+        "back",
+        "front",
+        "symbol"
+      ]
     },
     "folders": {
       "HOME": "house",

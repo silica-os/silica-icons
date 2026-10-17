@@ -71,11 +71,12 @@ sheet.
   notes, password-manager, photo-viewer, photos, reminders, screenshot, settings, terminal,
   text-editor) with dark variants and a rendered `icon.png` / `icon-dark.png`; calendar and clock
   are dynamic.
-- `files/`: one folder (symbol and tint applied by the shell), 15 file types (only the
-  figure: the sheet is the generic file's, the extension is written by the shell),
-  generic file (extension written by the shell, type → icon map), 5 volumes (internal disk,
+- `files/`: one folder in three layers (back, middle sheet shown when it has items, front;
+  symbol and tint applied by the shell), one generic file in two layers (back and folded
+  front; the shell puts a symbol or app icon between them and writes the extension, with the
+  type → kind map), 5 volumes (internal disk,
   external, network server, mounted disk image, optical disc), empty and full Trash. For file icons the side is the full
-  canvas: sheets, folders, volumes and Trash fill almost all of it, as in the reference (document keyline 684 × 904, folder 944 × 760,
+  canvas: sheets, folders, volumes and Trash fill almost all of it, as in the reference (document keyline 684 × 904, folder 956 × 776,
   volume 944 × 583, Trash 656 × 824).
 - `badges/`: alias, locked, unreadable and cloud, in light and dark, with the composition
   rules in `badges.json`.
