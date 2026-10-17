@@ -231,9 +231,9 @@ when it does not need to change.
 | `layers` | bottom to top: one `background` and 1 to 4 foreground layers |
 | `content_area` | optional, `file-generic` and `folder-generic`: `[x, y, w, h]` in the 1024 canvas, the flat area where a generator can put content; informative |
 | `shadow` | shadow the shell draws under the layer: `neutral`, `chromatic` (taken from the layer color) or `none` |
-| `variants.dark` | replacement layers for Dark and Tinted Dark |
+| `variants.dark` | replacement layers for Dark, Clear Dark and Tinted Dark |
 | `dynamic` | content updated at runtime, see below |
-| `rendered` | the whole icon as designed, with its relief, shadows and glass, PNG at 1024 from the design file's layer styles, one per theme: `default`, `dark`, `clear`, `tinted`, `tinted-dark`. The clear render has a translucent body (the shell adds the backdrop blur behind) and a grey foreground; Tinted renders use the default blue tint, so the shell recolours them only for another tint. The SVG layers stay for custom tints and dynamic content |
+| `rendered` | the whole icon as designed, with its relief, shadows and glass, PNG at 1024 from the design file's layer styles, one per theme: `default`, `dark`, `clear`, `clear-dark`, `tinted`, `tinted-dark`. Clear renders have a translucent body (the shell adds the backdrop blur behind) and a grey foreground; Tinted renders use the default blue tint, so the shell recolours them only for another tint. The SVG layers stay for custom tints and dynamic content |
 
 `file` icons have a single `artwork` layer (`icon.svg`, `icon-dark.svg`) and no
 background, except `file-generic` (`back`, `front`) and `folder-generic` (`back`,
@@ -246,14 +246,14 @@ background, except `file-generic` (`back`, `front`) and `folder-generic` (`back`
 
 ## Themes
 
-The shell generates five themes from the layers; clear exists only in light (there is no dark clear
-theme):
+The shell generates six themes from the layers:
 
 | Theme | Background | Foreground |
 | --- | --- | --- |
 | Default | `background` | `foreground` |
 | Dark | `background-dark`, otherwise graphite `#3a3a3c → #161618` | `foreground-dark`, otherwise `foreground` |
-| Clear (light only) | light glass (white 50 % → 25 % over the blurred backdrop) | `foreground` in grayscale, luminance mapped to 105–255 |
+| Clear Light | light glass (white 50 % → 25 % over the blurred backdrop) | `foreground` in grayscale, luminance mapped to 105–255 |
+| Clear Dark | dark glass (graphite 50 % → black 55 %) | as above, mapped to 150–255 |
 | Tinted Light | tint lightened to 90 % → 76 % | luminance mapped to the tint (dark → tint → white) |
 | Tinted Dark | tint darkened to 62 % → 84 % | luminance mapped from dark tint to light tint |
 
@@ -382,7 +382,7 @@ generic folder, see Principle):
   (100, 100, 824, 824) coincides with the box: origin of the badge canvas =
   (x₀ − 100 k, y₀ − 100 k). It is drawn after the icon and after the
   theme mapping: the badge is not tinted and does not go through Clear or Tinted.
-- Variants: `-dark` in the Dark and Tinted Dark themes; the light one in the others.
+- Variants: `-dark` in the Dark, Clear Dark and Tinted Dark themes; the light one in the others.
 - Precedence: at the bottom right `unreadable` wins, then `locked`, then `cloud` (the others
   are not shown). Below 32 pt only one badge remains, the first of `order`: `unreadable`,
   `alias`, `locked`, `cloud`.
@@ -427,8 +427,8 @@ Design source: the Silica 1.0 Amalfi Apps Kit (Sketch), artboards `Files / Folde
 ## Format 2: layered app icons
 
 An app icon in format 2 is a stack of named layers that the icon service composes at runtime in
-four appearances: **light, dark, clear, tinted**. Clear exists only in light; tinted has a light and a
-dark form, so the five themes of format 1 remain. Pilot icons: `mustache`, `terminal`, `clock`.
+four appearances: **light, dark, clear, tinted** (clear and tinted each with a light and a dark
+form, so the six themes of format 1 remain). Pilot icons: `mustache`, `terminal`, `clock`.
 
 ### Files
 
@@ -488,7 +488,7 @@ for every icon (no per-icon override): only layers carry per-icon choices.
 | `shadow` | `neutral` for body and dynamic, else `none` | cast shadow drawn by the service (format 1 values) |
 | `min_size` | 0 | drawn only when the icon side in pt is at least this |
 | `clear`, `tinted` | by role | `{ "mode", "opacity", "luma": [lo, hi] }` for that appearance |
-| `dark` | `{}` | overrides for the dark forms: `file` (default `layers/<id>-dark.svg` when it exists), `opacity`, `blend`, `shadow`, and a `tinted` object for tinted dark; missing keys inherit. No `clear` here: clear is light only |
+| `dark` | `{}` | overrides for the dark forms: `file` (default `layers/<id>-dark.svg` when it exists), `opacity`, `blend`, `shadow`, and `clear` / `tinted` objects for clear dark and tinted dark; missing keys inherit |
 | `dynamic` | none | for role `dynamic` only, see below |
 
 | Role | clear | tinted | Use |
@@ -513,14 +513,14 @@ changed by a mode, then the layer opacity applies.
    | Appearance | Light form | Dark form |
    | --- | --- | --- |
    | light / dark | `background.light` | `background.dark` |
-   | clear | white 50 % → 25 % over the blurred backdrop | none: clear is light only |
+   | clear | white 50 % → 25 % over the blurred backdrop | graphite 50 % → black 55 % |
    | tinted | T mixed with white 90 % → 76 % | T mixed with black 62 % → 84 % |
 
 3. Each layer, bottom to top, through its mode (light and dark draw every layer as drawn):
 
-   | Mode | clear (light only) | tinted, light form | tinted, dark form |
+   | Mode | clear | tinted, light form | tinted, dark form |
    | --- | --- | --- | --- |
-   | `ramp` | grey, L → 105…255 | L 0 → T with black 70 %, 0.5 → T, 1 → white | L 0 → T with black 70 %, 1 → T with white 60 % |
+   | `ramp` | grey, L → 105…255 (dark form 150…255) | L 0 → T with black 70 %, 0.5 → T, 1 → white | L 0 → T with black 70 %, 1 → T with white 60 % |
    | `light` | grey, L → 200…255 | white shaded by L (200…255) | T with white 70 %, shaded by L |
    | `glass` | white glass, see below | not allowed | not allowed |
    | `accent` | not allowed | OKLCH(L, chroma and hue of T), chroma reduced into sRGB | same |
@@ -537,7 +537,7 @@ changed by a mode, then the layer opacity applies.
 5. Blend, clip to the body, draw the rim (format 1 values; clear and tinted use the light ones).
 
 `tools/compose.py` follows steps 1–3 and 5 without shadows and rim (`--appearance clear|tinted`,
-`--dark` for light and tinted only, `--accent`, `--time`): the check sheet shows the layers and their
+`--dark`, `--accent`, `--time`): the check sheet shows the layers and their
 transforms, the service adds shadows, rim and the backdrop blur. It clips with `tools/body.svg`,
 renders every layer at the final size (hands already turned, their baked shadow offsets turned with
 them, since resvg applies `feOffset` along the canvas axes), widens each filter region to the shape's
@@ -564,7 +564,7 @@ then its shadow is cast (offset stays downward). The second hand follows the for
 desktop entry, the hicolor copy, other desktops, a compiled file that does not load. For Clock
 they show the hands at 10:09:30, the pose of the Apps Kit artboards.
 
-During the pilot the format 1 renders `icon-clear.png` and `icon-tinted*.png` of the three pilot
+During the pilot the format 1 renders `icon-clear*.png` and `icon-tinted*.png` of the three pilot
 icons stay in the repository as regression references for the service output (they are no longer
 sources and have no hands on Clock); they are removed when the pilot ends.
 

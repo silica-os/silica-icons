@@ -41,13 +41,12 @@ The system symbols are also an icon font for Sketch and Flutter: see the Font se
 - App icons contain neither shape nor shadow: the developer supplies a background and
   up to four groups of SVG layers on the 1024 grid; the shell clips them with the mask
   (body 824, smooth corners, outline `tools/body.svg`), adds border, shadows and glass and
-  generates the themes Default, Dark, Clear (light only), Tinted Light, Tinted Dark.
+  generates the themes Default, Dark, Clear Light, Clear Dark, Tinted Light, Tinted Dark.
 - Icons without layers (an existing freedesktop theme) are reduced to the 600 keyline and
   placed on a neutral base.
 - Format 2 (pilot: Mustache, Terminal, Clock): each app icon is a stack of named SVG layers in
   `apps/<id>/layers/` with per-layer roles and modes in `icon.json`, composed in four
-  appearances (light, dark, clear, tinted; clear is light only); `icon.png` / `icon-dark.png`
-  are the flat fallback.
+  appearances (light, dark, clear, tinted); `icon.png` / `icon-dark.png` are the flat fallback.
   The other apps are still format 1 (`background.svg`, `foreground.svg`).
 - Format specification: [`docs/icon-format.md`](docs/icon-format.md).
 
@@ -73,7 +72,7 @@ venv/bin/python tools/compose.py --appearance tinted --dark --out build/sheet-ti
 ```
 
 `--appearance clear|tinted` (with `--accent` and `--time`) applies to format 2 icons; format 1
-icons are drawn in light or dark. Clear is light only: `--appearance clear --dark` is refused.
+icons are drawn in light or dark.
 
 `compose.py` recomposes every icon from its layers as the shell would and writes a check
 sheet (layers only: symbols, text and tints of file and folder thumbnails belong to the

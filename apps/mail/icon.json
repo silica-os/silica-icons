@@ -26,6 +26,7 @@
     "default": "icon.png",
     "dark": "icon-dark.png",
     "clear": "icon-clear.png",
+    "clear-dark": "icon-clear-dark.png",
     "tinted": "icon-tinted.png",
     "tinted-dark": "icon-tinted-dark.png"
   }

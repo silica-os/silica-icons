@@ -3,8 +3,7 @@ and writes a check sheet. Usage:
 python tools/compose.py [--dark] [--appearance light|clear|tinted] [--accent #rrggbb] [--size N] [--out file.png]
 
 App icons in format 2 (`icon.json` "format": 2, `layers/`) are composed in the four appearances of
-docs/icon-format.md, Format 2 (light, dark, clear, tinted). `--dark` picks the dark form of light and
-tinted; clear exists only in light, so `--appearance clear --dark` is refused. Format 1 icons
+docs/icon-format.md, Format 2 (light, dark, clear, tinted; `--dark` picks the dark form). Format 1 icons
 are composed as before; `--appearance clear|tinted` does not apply to them (their clear and tinted
 looks are the pre-rendered PNGs). The cast shadows and the rim are drawn by the icon service, not here.
 
@@ -331,7 +330,9 @@ def background2(icon_dir: Path, spec: dict, size: int, appearance: str, dark: bo
         if "file" in b:
             return as_array(render(icon_dir / b["file"], size, fonts))
         return vertical(size, hex_rgb(b["gradient"][0]), hex_rgb(b["gradient"][1]))
-    if appearance == "clear":  # light only
+    if appearance == "clear":
+        if dark:
+            return vertical(size, hex_rgb(GRAPHITE[0]), BLACK, 0.50, 0.55)
         return vertical(size, WHITE, WHITE, 0.50, 0.25)
     if dark:  # tinted
         return vertical(size, mix(accent, BLACK, 0.62), mix(accent, BLACK, 0.84))
@@ -348,7 +349,7 @@ def transform(px: np.ndarray, mode: str, appearance: str, dark: bool, accent: np
         if mode == "light":
             lo, hi = 200, 255
         else:
-            lo, hi = luma or (105, 255)
+            lo, hi = luma or ((150, 255) if dark else (105, 255))
         rgb = np.repeat(((lo + (hi - lo) * L) / 255)[..., None], 3, -1)
     elif mode == "accent":
         rgb = accent_map(L, accent)
@@ -391,10 +392,7 @@ def hand_angle(unit: str, time: str) -> float:
 
 def compose2(icon_dir: Path, manifest: dict, size: int, appearance: str, dark: bool, accent_hex: str,
              time: str | None, fonts: list[str]) -> Image.Image:
-    """A format 2 app icon in one appearance: light, clear (light only), tinted; `dark` picks the
-    dark form of light and tinted and is ignored for clear."""
-    if appearance == "clear":
-        dark = False  # there is no dark clear appearance
+    """A format 2 app icon in one appearance (light, clear, tinted; `dark` for the dark form)."""
     accent = hex_rgb(accent_hex)
     time = time or manifest.get("fallback", {}).get("time", "10:09:30")
     out = background2(icon_dir, manifest["background"], size, appearance, dark, accent, fonts)
@@ -402,7 +400,7 @@ def compose2(icon_dir: Path, manifest: dict, size: int, appearance: str, dark: b
         lay = dict(layer)
         if dark:
             for k, v in layer.get("dark", {}).items():
-                lay[k] = {**layer.get(k, {}), **v} if k == "tinted" else v
+                lay[k] = {**layer.get(k, {}), **v} if k in ("clear", "tinted") else v
         if lay.get("min_size", 0) > size:
             continue
         role_clear, role_tinted, role_factor = ROLE_MODES[lay["role"]]
@@ -480,8 +478,6 @@ def main() -> None:
     ap.add_argument("--fonts", action="append", default=[])
     ap.add_argument("--out", default="build/contact-sheet.png")
     a = ap.parse_args()
-    if a.appearance == "clear" and a.dark:
-        ap.error("clear exists only in light: drop --dark")
     dirs = sorted(p.parent for p in ROOT.glob("*/*/icon.json"))
     cols = 8
     cell = a.size + 24
