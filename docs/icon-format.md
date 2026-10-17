@@ -1,7 +1,9 @@
 # Icon format
 
-Version 1. Applies to `apps/`, `files/` and `badges/`. System symbols (`symbols/`) have a
-separate specification.
+Versions 1 and 2. Format 1 applies to `apps/`, `files/` and `badges/`; format 2 (layered app
+icons, see [Format 2](#format-2-layered-app-icons)) applies to `apps/` only and is in its pilot:
+Mustache, Terminal and Clock use it, the other apps stay on format 1. System symbols
+(`symbols/`) have a separate specification.
 
 ## Principle
 
@@ -118,6 +120,8 @@ group (`icon-dark`); the paths stay those of the 824 drawing. The layers of `fil
 | Mustache | foreground in a keyline | profile flush with the body (margin 64), glasses from x 182 to 842, lenses Ø 229 (stroke 22) centered on the golden line y 415, mustache 522 wide | full-canvas portrait: the profile follows the corners of the body |
 
 ## Folder of an icon
+
+Format 1 (the format 2 folder, with `layers/`, is in [Format 2](#format-2-layered-app-icons)):
 
 ```
 apps/<id>/
@@ -419,6 +423,163 @@ silica-desktop; this repo only provides the layers.
 
 Design source: the Silica 1.0 Amalfi Apps Kit (Sketch), artboards `Files / Folder 1024` and
 `Files / Folder Full 1024`, layers `back`, `middle` (Full only) and `front` in the `Artwork` group.
+
+## Format 2: layered app icons
+
+An app icon in format 2 is a stack of named layers that the icon service composes at runtime in
+four appearances: **light, dark, clear, tinted** (clear and tinted each with a light and a dark
+form, so the six themes of format 1 remain). Pilot icons: `mustache`, `terminal`, `clock`.
+
+### Files
+
+```
+apps/<id>/
+  icon.json                 manifest, "format": 2
+  layers/<layer>.svg        one file per layer, 1024 canvas, viewBox 0 0 1024 1024
+  layers/<layer>-dark.svg   optional: the layer as drawn for the dark forms
+  layers/background.svg     optional, only for a drawn background; otherwise a gradient in icon.json
+  icon.png, icon-dark.png   flat fallback, light and dark
+  preview.png               documentation only
+```
+
+- Canvas, body and clip are those of format 1 (body 824 at (100, 100), smooth radius 215,
+  smoothing 0.55). Layers are drawn unclipped; the service clips the whole stack to the body.
+- The layer id is lowercase kebab-case, unique in the icon, equal to the file stem and to the
+  group name in the Apps Kit. `background` and `fallback` are reserved.
+- Layers are listed **bottom to top**. The background is not in the list: it is always the bottom.
+  Required: the background and at least one `body` layer; at most 9 layers in total.
+- As in format 1, no body mask, rim or cast shadow is drawn into a layer (see What does NOT go in
+  the layers); internal shading and gradients stay in the SVG. Text is outlined.
+
+### Manifest
+
+```json
+{
+  "format": 2, "id": "terminal", "name": "Terminal", "kind": "app", "keyline": "square",
+  "background": { "light": { "gradient": ["#28282c", "#08080a"] },
+                  "dark":  { "gradient": ["#1e1e22", "#040405"] } },
+  "layers": [
+    { "id": "output", "role": "detail", "min_size": 32,
+      "clear": { "mode": "ramp" }, "tinted": { "mode": "ramp" } },
+    { "id": "prompt", "role": "body", "clear": { "mode": "light" }, "tinted": { "mode": "light" } },
+    { "id": "cursor", "role": "detail", "clear": { "mode": "ramp" }, "tinted": { "mode": "accent" } }
+  ],
+  "fallback": { "light": "icon.png", "dark": "icon-dark.png" }
+}
+```
+
+| Icon field | Meaning |
+| --- | --- |
+| `background.light` | `{ "gradient": [top, bottom] }` (vertical, over the body height) or `{ "file": "layers/background.svg" }` |
+| `background.dark` | same shape; default graphite `#3a3a3c → #141416` |
+| `layers` | the layers, bottom to top |
+| `glass` | optional tuning of the `glass` mode: `{ "top", "bottom", "blur" }` |
+| `fallback` | `{ "light", "dark", "time" }`: the flat icons; `time` is the clock pose baked in |
+
+There is no `rendered` and no `variants` in format 2. Clear and tinted backgrounds are the same
+for every icon (no per-icon override): only layers carry per-icon choices.
+
+| Layer field | Default | Meaning |
+| --- | --- | --- |
+| `id` | required | layer id; the file is `layers/<id>.svg` |
+| `role` | required | `body`, `detail`, `highlight` or `dynamic`; sets the defaults below |
+| `opacity` | 1 | layer opacity |
+| `blend` | `normal` | `normal`, `multiply` or `screen` |
+| `shadow` | `neutral` for body and dynamic, else `none` | cast shadow drawn by the service (format 1 values) |
+| `min_size` | 0 | drawn only when the icon side in pt is at least this |
+| `clear`, `tinted` | by role | `{ "mode", "opacity", "luma": [lo, hi] }` for that appearance |
+| `dark` | `{}` | overrides for the dark forms: `file` (default `layers/<id>-dark.svg` when it exists), `opacity`, `blend`, `shadow`, and `clear` / `tinted` objects for clear dark and tinted dark; missing keys inherit |
+| `dynamic` | none | for role `dynamic` only, see below |
+
+| Role | clear | tinted | Use |
+| --- | --- | --- | --- |
+| `body` | `ramp` | `ramp` | the raised main pieces |
+| `detail` | `ramp` | `ramp` | flat marks: lines, ticks, numerals |
+| `highlight` | `keep` at opacity 0.6 | `keep` at opacity 0.6 | white sheens |
+| `dynamic` | `ramp` | `ramp` | parts that move (clock hands and cap) |
+
+A dark recolour is a `-dark.svg` drawn in the Apps Kit, never a colour rule in the manifest.
+
+### Composition
+
+Inputs: the appearance, the system light or dark form, the accent T (default `Accent/Amalfi`,
+`#0e77e6`), the side in pt, the time. L is the OKLab lightness of a source pixel; alpha is never
+changed by a mode, then the layer opacity applies.
+
+1. Resolve each layer for the dark form when dark; drop layers with `min_size` above the side and
+   layers whose mode is `hide`.
+2. Background, over the body height:
+
+   | Appearance | Light form | Dark form |
+   | --- | --- | --- |
+   | light / dark | `background.light` | `background.dark` |
+   | clear | white 50 % → 25 % over the blurred backdrop | graphite 50 % → black 55 % |
+   | tinted | T mixed with white 90 % → 76 % | T mixed with black 62 % → 84 % |
+
+3. Each layer, bottom to top, through its mode (light and dark draw every layer as drawn):
+
+   | Mode | clear | tinted, light form | tinted, dark form |
+   | --- | --- | --- | --- |
+   | `ramp` | grey, L → 105…255 (dark form 150…255) | L 0 → T with black 70 %, 0.5 → T, 1 → white | L 0 → T with black 70 %, 1 → T with white 60 % |
+   | `light` | grey, L → 200…255 | white shaded by L (200…255) | T with white 70 %, shaded by L |
+   | `glass` | white glass, see below | not allowed | not allowed |
+   | `accent` | not allowed | OKLCH(L, chroma and hue of T), chroma reduced into sRGB | same |
+   | `keep` | as drawn | as drawn | as drawn |
+   | `hide` | not drawn | not drawn | not drawn |
+
+   `luma: [lo, hi]` replaces the ends of the ramp for one layer: grey levels 0–255 in clear,
+   positions 0–1 on the tinted ramp in tinted.
+   `glass`: inside the layer's alpha the stack below is blurred (σ 12 canvas units) and covered
+   by white at opacity 0.85 (top of the layer) → 0.55 (bottom), with a 4-unit light lip along
+   its top edge. At most one glass layer per icon.
+4. Cast shadows from the layer alpha (neutral, or chromatic from its mean colour) in light, dark
+   and tinted; in clear only for body and dynamic layers, at half strength.
+5. Blend, clip to the body, draw the rim (format 1 values; clear and tinted use the light ones).
+
+`tools/compose.py` follows steps 1–3 and 5 without shadows and rim (`--appearance clear|tinted`,
+`--dark`, `--accent`, `--time`): the check sheet shows the layers and their transforms, the
+service adds shadows, rim and the backdrop blur.
+
+### Dynamic layers
+
+```json
+{ "id": "hand-second", "role": "dynamic", "min_size": 64, "tinted": { "mode": "accent" },
+  "dynamic": { "kind": "clock-hand", "unit": "second", "pivot": [512, 512] } }
+```
+
+`kind` is `clock-hand`, `clock-cap`, `calendar-month` or `calendar-day`; `unit` is `hour`,
+`minute` or `second`; `pivot` is a canvas point (default `[512, 512]`); `source` is
+`local-time` (default). A hand is drawn pointing to 12 and turns with the angles of the Clock
+section above; the appearance transform is applied to the unrotated layer, then the layer turns,
+then its shadow is cast (offset stays downward). The second hand follows the format 1 update rule.
+
+### Fallback
+
+`icon.png` and `icon-dark.png` are the whole icon at 1024, flat (body, layers, dynamic parts at
+`fallback.time`), exported from the Apps Kit artboards. They serve where nothing composes: the
+desktop entry, the hicolor copy, other desktops, a compiled file that does not load. For Clock
+they show the hands at 10:09:30, the pose of the Apps Kit artboards.
+
+During the pilot the format 1 renders `icon-clear*.png` and `icon-tinted*.png` of the three pilot
+icons stay in the repository as regression references for the service output (they are no longer
+sources and have no hands on Clock); they are removed when the pilot ends.
+
+### Apps Kit convention
+
+In each `Apps / <Name> 1024` and `Apps / <Name> Dark 1024` artboard the artwork is one top-level
+group per layer, named exactly the layer id, in manifest order, above the `Icon / Background`
+instance (whose body style gives the background gradient). Clock's hands and cap are symbol
+instances named `hand-hour`, `hand-minute`, `hand-second`, `cap`, from the full-canvas
+`Dynamic / Clock / …` symbols drawn at 12; their layer files are those symbols. Light and dark
+artboards have the same ids in the same order; a `-dark.svg` is exported only where the dark
+group differs. Properties live only in `icon.json`; the ids in Sketch and in the manifest must
+match one to one. `Grid / Overlay` is not exported.
+
+### Format 1 icons
+
+A format 1 app icon reads as format 2 with one `body` layer (`foreground.svg`) and the background
+file; the clear and tinted looks come from the same rules. The other apps keep format 1 until
+they move to `layers/`.
 
 ## Icons without layers
 

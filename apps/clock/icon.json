@@ -1,59 +1,120 @@
 {
-  "format": 1,
+  "format": 2,
   "id": "clock",
   "name": "Clock",
   "kind": "app",
   "keyline": "full",
+  "background": {
+    "light": {
+      "gradient": [
+        "#ffffff",
+        "#dde3ec"
+      ]
+    },
+    "dark": {
+      "gradient": [
+        "#3a3a3c",
+        "#141416"
+      ]
+    }
+  },
   "layers": [
     {
-      "role": "background",
-      "file": "background.svg"
+      "id": "ticks",
+      "role": "detail",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
     },
     {
-      "role": "foreground",
-      "file": "foreground.svg",
-      "shadow": "neutral"
+      "id": "numerals",
+      "role": "detail",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    },
+    {
+      "id": "hand-hour",
+      "role": "dynamic",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      },
+      "dynamic": {
+        "kind": "clock-hand",
+        "unit": "hour",
+        "pivot": [
+          512,
+          512
+        ]
+      }
+    },
+    {
+      "id": "hand-minute",
+      "role": "dynamic",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      },
+      "dynamic": {
+        "kind": "clock-hand",
+        "unit": "minute",
+        "pivot": [
+          512,
+          512
+        ]
+      }
+    },
+    {
+      "id": "hand-second",
+      "role": "dynamic",
+      "min_size": 64,
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "accent"
+      },
+      "dynamic": {
+        "kind": "clock-hand",
+        "unit": "second",
+        "pivot": [
+          512,
+          512
+        ]
+      }
+    },
+    {
+      "id": "cap",
+      "role": "dynamic",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "accent"
+      },
+      "dynamic": {
+        "kind": "clock-cap",
+        "pivot": [
+          512,
+          512
+        ]
+      }
     }
   ],
-  "variants": {
-    "dark": {
-      "background": "background-dark.svg",
-      "foreground": "foreground-dark.svg",
-      "hand-hour": "hand-hour-dark.svg",
-      "hand-minute": "hand-minute-dark.svg",
-      "hand-second": "hand-second-dark.svg",
-      "cap": "cap-dark.svg"
-    }
-  },
-  "dynamic": {
-    "type": "clock",
-    "hands": [
-      {
-        "unit": "hour",
-        "file": "hand-hour.svg"
-      },
-      {
-        "unit": "minute",
-        "file": "hand-minute.svg"
-      },
-      {
-        "unit": "second",
-        "file": "hand-second.svg",
-        "min_size": 64
-      }
-    ],
-    "cap": "cap.svg",
-    "pivot": [
-      512,
-      512
-    ]
-  },
-  "rendered": {
-    "default": "icon.png",
+  "fallback": {
+    "light": "icon.png",
     "dark": "icon-dark.png",
-    "clear": "icon-clear.png",
-    "clear-dark": "icon-clear-dark.png",
-    "tinted": "icon-tinted.png",
-    "tinted-dark": "icon-tinted-dark.png"
+    "time": "10:09:30"
   }
 }

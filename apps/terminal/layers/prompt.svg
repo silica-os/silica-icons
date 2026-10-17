@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <path d="M25.08 300.72V262.77L120.78 218.55Q127.38 215.58 133.815 213.6Q140.25 211.62 143.88 210.63Q140.25 209.97 133.65 207.99Q127.05 206.01 120.78 203.37L25.08 158.82V120.21L172.92 189.84V231.09Z" id="text-2" fill="#FFFFFF"></path>
+        <filter x="-3.5%" y="-2.5%" width="107.0%" height="107.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.4 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Apps-/-Terminal-1024" stroke="none" fill="none" fill-rule="evenodd">
+        <g id="prompt" stroke-width="1" transform="translate(205, 430)" fill="#FFFFFF" fill-opacity="1">
+            <g id="Prompt">
+                <use filter="url(#filter-3)" xlink:href="#text-2"></use>
+                <use xlink:href="#text-2"></use>
+            </g>
+        </g>
+    </g>
+</svg>

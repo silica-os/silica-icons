@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.349019608" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Apps-/-Mustache-Dark-1024" stroke="none" fill="none" fill-rule="evenodd">
+        <g id="profile-specular" stroke-width="1" transform="translate(520, 176)" fill="url(#linearGradient-2)">
+            <path d="M158,0 C192.400073,0 209.600109,0 223.781184,3.47279696 C272.429446,15.386248 308.709485,56.0404988 315.032048,105.725596 C316,113.332128 316,122.388085 316,140.5 C316,158.632988 316,167.699482 314.055946,175.149495 C309.72789,191.735485 298.512517,205.678365 283.23943,213.460391 C270.404726,220 253.60315,220 220,220 L96,220 C62.3968496,220 45.5952745,220 32.76057,213.460391 C17.4874829,205.678365 6.27211015,191.735485 1.94405446,175.149495 C0,167.699482 0,158.632988 0,140.5 C0,122.388085 0,113.332128 0.967951814,105.725596 C7.29051523,56.0404988 43.570554,15.386248 92.2188161,3.47279696 C106.399891,0 123.599927,0 158,0 Z" id="Profile-Specular"></path>
+        </g>
+    </g>
+</svg>

@@ -23,18 +23,18 @@ for third-party assets: CC0, CC-BY, CC BY-SA, OFL, MIT/Apache.
 | `apps/calendar/foreground-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/calendar/foreground.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/calendar/preview.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/background-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/background.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/cap-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/cap.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/foreground-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/foreground.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/hand-hour-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/hand-hour.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/hand-minute-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/hand-minute.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/hand-second-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/hand-second.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
+| `apps/clock/layers/cap-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/clock/layers/cap.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/clock/layers/hand-hour-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/clock/layers/hand-hour.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/clock/layers/hand-minute-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/clock/layers/hand-minute.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/clock/layers/hand-second-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/clock/layers/hand-second.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/clock/layers/numerals-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/clock/layers/numerals.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/clock/layers/ticks-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/clock/layers/ticks.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
 | `apps/clock/preview.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/disks/background-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/disks/background.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
@@ -51,10 +51,14 @@ for third-party assets: CC0, CC-BY, CC BY-SA, OFL, MIT/Apache.
 | `apps/mail/foreground-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/mail/foreground.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/mail/preview.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/mustache/background-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/mustache/background.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/mustache/foreground-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/mustache/foreground.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
+| `apps/mustache/layers/glasses-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/mustache/layers/glasses.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/mustache/layers/mustache-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/mustache/layers/mustache.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/mustache/layers/profile-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/mustache/layers/profile-specular-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/mustache/layers/profile-specular.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
+| `apps/mustache/layers/profile.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; split into format 2 layers 2026-10-18 |
 | `apps/mustache/preview.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/notes/background-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/notes/background.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
@@ -91,10 +95,11 @@ for third-party assets: CC0, CC-BY, CC BY-SA, OFL, MIT/Apache.
 | `apps/silica/foreground-dark.svg` | Silica project | Silica trademark, all rights reserved ([silica-brand TRADEMARKS.md](https://github.com/silica-os/silica-brand/blob/main/TRADEMARKS.md)) | original, from `silica-brand` (`exports/app-icon/`, generated by `tools/build.py`) |
 | `apps/silica/foreground.svg` | Silica project | Silica trademark, all rights reserved ([silica-brand TRADEMARKS.md](https://github.com/silica-os/silica-brand/blob/main/TRADEMARKS.md)) | original, from `silica-brand` (`exports/app-icon/`, generated by `tools/build.py`) |
 | `apps/silica/preview.png` | Silica project | Silica trademark, all rights reserved ([silica-brand TRADEMARKS.md](https://github.com/silica-os/silica-brand/blob/main/TRADEMARKS.md)) | original, from `silica-brand` (`exports/app-icon/`, generated by `tools/build.py`) |
-| `apps/terminal/background-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17 |
-| `apps/terminal/background.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17 |
-| `apps/terminal/foreground-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17 |
-| `apps/terminal/foreground.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17 |
+| `apps/terminal/layers/cursor-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; split into format 2 layers 2026-10-18 |
+| `apps/terminal/layers/cursor.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; split into format 2 layers 2026-10-18 |
+| `apps/terminal/layers/output-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; split into format 2 layers 2026-10-18 |
+| `apps/terminal/layers/output.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; split into format 2 layers 2026-10-18 |
+| `apps/terminal/layers/prompt.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; split into format 2 layers 2026-10-18 |
 | `apps/terminal/preview.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17 |
 | `apps/text-editor/background-dark.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/text-editor/background.svg` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
@@ -107,8 +112,8 @@ for third-party assets: CC0, CC-BY, CC BY-SA, OFL, MIT/Apache.
 | `apps/calculator/icon.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/calendar/icon-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/calendar/icon.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/icon-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
-| `apps/clock/icon.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
+| `apps/clock/icon-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; fallback with the hands at 10:09:30, 2026-10-18 |
+| `apps/clock/icon.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; fallback with the hands at 10:09:30, 2026-10-18 |
 | `apps/disks/icon-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/disks/icon.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
 | `apps/fonts/icon-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16 |
@@ -159,10 +164,10 @@ for third-party assets: CC0, CC-BY, CC BY-SA, OFL, MIT/Apache.
 | `apps/calendar/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/calendar/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/calendar/icon-tinted.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
-| `apps/clock/icon-clear-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
-| `apps/clock/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
-| `apps/clock/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
-| `apps/clock/icon-tinted.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
+| `apps/clock/icon-clear-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
+| `apps/clock/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
+| `apps/clock/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
+| `apps/clock/icon-tinted.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
 | `apps/disks/icon-clear-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/disks/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/disks/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
@@ -179,10 +184,10 @@ for third-party assets: CC0, CC-BY, CC BY-SA, OFL, MIT/Apache.
 | `apps/mission-control/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/mission-control/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/mission-control/icon-tinted.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
-| `apps/mustache/icon-clear-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
-| `apps/mustache/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
-| `apps/mustache/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
-| `apps/mustache/icon-tinted.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
+| `apps/mustache/icon-clear-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
+| `apps/mustache/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
+| `apps/mustache/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
+| `apps/mustache/icon-tinted.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
 | `apps/notes/icon-clear-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/notes/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/notes/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
@@ -211,10 +216,10 @@ for third-party assets: CC0, CC-BY, CC BY-SA, OFL, MIT/Apache.
 | `apps/settings/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/settings/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/settings/icon-tinted.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
-| `apps/terminal/icon-clear-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; clear and tinted renders generated from the foreground |
-| `apps/terminal/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; clear and tinted renders generated from the foreground |
-| `apps/terminal/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; clear and tinted renders generated from the foreground |
-| `apps/terminal/icon-tinted.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; clear and tinted renders generated from the foreground |
+| `apps/terminal/icon-clear-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
+| `apps/terminal/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
+| `apps/terminal/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
+| `apps/terminal/icon-tinted.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-17; clear and tinted renders generated from the foreground; kept as regression reference for format 2 |
 | `apps/text-editor/icon-clear-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/text-editor/icon-clear.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |
 | `apps/text-editor/icon-tinted-dark.png` | Silica project | CC BY-SA 4.0 | original, drawn in the Silica 1.0 Amalfi Apps Kit (Sketch), 2026-10-16; clear and tinted renders generated from the foreground |

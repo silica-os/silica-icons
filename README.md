@@ -44,6 +44,10 @@ The system symbols are also an icon font for Sketch and Flutter: see the Font se
   themes Default, Dark, Clear Light, Clear Dark, Tinted Light, Tinted Dark.
 - Icons without layers (an existing freedesktop theme) are reduced to the 600 keyline and
   placed on a neutral base.
+- Format 2 (pilot: Mustache, Terminal, Clock): each app icon is a stack of named SVG layers in
+  `apps/<id>/layers/` with per-layer roles and modes in `icon.json`, composed in four
+  appearances (light, dark, clear, tinted); `icon.png` / `icon-dark.png` are the flat fallback.
+  The other apps are still format 1 (`background.svg`, `foreground.svg`).
 - Format specification: [`docs/icon-format.md`](docs/icon-format.md).
 
 ## Design source
@@ -61,10 +65,14 @@ is the pre-Amalfi 3D generator, kept for reference only.
 ## Tools
 
 ```
-python3 -m venv venv && venv/bin/pip install pillow resvg-py
+python3 -m venv venv && venv/bin/pip install pillow resvg-py numpy
 venv/bin/python tools/compose.py --fonts <folder with Inter> --out build/sheet-light.png
 venv/bin/python tools/compose.py --dark --fonts <folder with Inter> --out build/sheet-dark.png
+venv/bin/python tools/compose.py --appearance tinted --dark --out build/sheet-tinted-dark.png
 ```
+
+`--appearance clear|tinted` (with `--accent` and `--time`) applies to format 2 icons; format 1
+icons are drawn in light or dark.
 
 `compose.py` recomposes every icon from its layers as the shell would and writes a check
 sheet (layers only: symbols, text and tints of file and folder thumbnails belong to the
