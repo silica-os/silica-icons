@@ -26,7 +26,7 @@ All measures are on a **1024 × 1024** canvas.
 | Element | Measure |
 | --- | --- |
 | Body (where the shell clips) | 824 × 824 at (100, 100) |
-| Body corners | smooth, radius 215, smoothing 0.55; the reference outline is the Apps Kit `Icon / Background` Body path, exported as `tools/body.svg` (drawn there as radius 214, smoothing 0.6) |
+| Body corners | smooth, radius 214, smoothing 0.6, as drawn in the Apps Kit `Icon / Background` Body; the reference outline is that path, exported as `tools/body.svg` |
 | Square keyline | 600 × 600 at (212, 212) |
 | Large circle keyline | Ø 600, center (512, 512) |
 | Small circle keyline | Ø 424, center (512, 512) |
@@ -54,7 +54,7 @@ artboard). The golden grid symbol `Grid / Golden 1024` exists only in the legacy
 
 | Keyline | Where it comes from |
 | --- | --- |
-| Body 824 | canvas − 2 × 100; radius 215 ≈ 0.26 × side (smoothing 0.55) |
+| Body 824 | canvas − 2 × 100; radius 214 ≈ 0.26 × side (smoothing 0.6) |
 | Square and circle 600 | base quantity (20 u) |
 | Circle 424 | 600 / √2: circle inscribed in the square inscribed in the 600 circle |
 | Vertical 520 × 680, horizontal 680 × 520 | same perimeter as the 600 square (520 + 680 = 2 × 600), area 98 %; ratio 1.31, not golden |
