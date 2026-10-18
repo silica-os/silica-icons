@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>executable</title>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Files-/-System-/-Executable-1024" transform="translate(-262, -262)">
+            <g id="glyph" transform="translate(262, 262)">
+                <rect id="box" x="0" y="0" width="500" height="500"></rect>
+                <path d="M115.192,97.48 L384.808,97.48 C410.893513,97.48 432.04,118.626487 432.04,144.712 L432.04,355.288 C432.04,381.373513 410.893513,402.52 384.808,402.52 L115.192,402.52 C89.1064867,402.52 67.96,381.373513 67.96,355.288 L67.96,144.712 C67.96,118.626487 89.1064867,97.48 115.192,97.48 Z" id="window" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polyline id="prompt" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" points="146.68 190.96 205.72 250 146.68 309.04"></polyline>
+                <line x1="245.08" y1="309.04" x2="343.48" y2="309.04" id="cursor" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></line>
+            </g>
+        </g>
+    </g>
+</svg>

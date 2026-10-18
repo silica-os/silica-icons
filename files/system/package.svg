@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>package</title>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Files-/-System-/-Package-1024" transform="translate(-262, -262)">
+            <g id="glyph" transform="translate(262, 262)">
+                <rect id="box" x="0" y="0" width="500" height="500"></rect>
+                <polygon id="cube" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" points="250 67.96 407.44 156.52 407.44 343.48 250 432.04 92.56 343.48 92.56 156.52"></polygon>
+                <polyline id="top-edges" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" points="92.56 156.52 250 245.08 407.44 156.52"></polyline>
+                <line x1="250" y1="245.08" x2="250" y2="432.04" id="front-edge" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></line>
+            </g>
+        </g>
+    </g>
+</svg>

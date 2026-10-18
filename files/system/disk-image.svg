@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>disk-image</title>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Files-/-System-/-Disk-Image-1024" transform="translate(-262, -262)">
+            <g id="glyph" transform="translate(262, 262)">
+                <rect id="box" x="0" y="0" width="500" height="500"></rect>
+                <path d="M67.96,250 C67.96,350.537916 149.462084,432.04 250,432.04 C350.537916,432.04 432.04,350.537916 432.04,250 C432.04,149.462084 350.537916,67.96 250,67.96 C149.462084,67.96 67.96,149.462084 67.96,250 Z" id="disc" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M202.768,250 C202.768,276.085513 223.914487,297.232 250,297.232 C276.085513,297.232 297.232,276.085513 297.232,250 C297.232,223.914487 276.085513,202.768 250,202.768 C223.914487,202.768 202.768,223.914487 202.768,250 Z" id="hole" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

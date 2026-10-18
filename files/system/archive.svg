@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>archive</title>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Files-/-System-/-Archive-1024" transform="translate(-262, -262)">
+            <g id="glyph" transform="translate(262, 262)">
+                <rect id="box" x="0" y="0" width="500" height="500"></rect>
+                <path d="M91.576,97.48 L408.424,97.48 C421.466757,97.48 432.04,108.053243 432.04,121.096 L432.04,162.424 C432.04,175.466757 421.466757,186.04 408.424,186.04 L91.576,186.04 C78.5332433,186.04 67.96,175.466757 67.96,162.424 L67.96,121.096 C67.96,108.053243 78.5332433,97.48 91.576,97.48 Z" id="lid" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M107.32,186.04 L107.32,365.128 C107.32,391.213513 128.466487,412.36 154.552,412.36 L345.448,412.36 C371.533513,412.36 392.68,391.213513 392.68,365.128 L392.68,186.04" id="body" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></path>
+                <line x1="205.72" y1="259.84" x2="294.28" y2="259.84" id="slot" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></line>
+            </g>
+        </g>
+    </g>
+</svg>

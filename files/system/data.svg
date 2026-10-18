@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>data</title>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Files-/-System-/-Data-1024" transform="translate(-262, -262)">
+            <g id="glyph" transform="translate(262, 262)">
+                <rect id="box" x="0" y="0" width="500" height="500"></rect>
+                <path d="M166.36,112.24 C196.249651,112.24 220.48,136.470349 220.48,166.36 L220.48,333.64 C220.48,363.529651 196.249651,387.76 166.36,387.76 C136.470349,387.76 112.24,363.529651 112.24,333.64 L112.24,166.36 C112.24,136.470349 136.470349,112.24 166.36,112.24 Z" id="zero" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polyline id="one" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" points="279.52 166.36 333.64 112.24 333.64 387.76"></polyline>
+                <line x1="284.44" y1="387.76" x2="382.84" y2="387.76" id="one-base" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></line>
+            </g>
+        </g>
+    </g>
+</svg>

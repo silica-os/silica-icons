@@ -328,6 +328,23 @@ silica-desktop; this repo only provides the layers.
 Design source: the Silica 1.0 Amalfi Apps Kit (Sketch), artboard `Files / File 1024`, layers
 `back` and `front` in the `Artwork` group.
 
+### System document glyphs
+
+`files/system/` holds the glyphs of the structural system types (not format-specific documents):
+`executable`, `archive`, `disk-image`, `link`, `package`, `data`. The thumbnail generator places
+the glyph in its glyph box, between the `back` and the `front` of the generic file, fitted and
+centred, and draws it as-is (no tint, no recolouring).
+
+- Each glyph is `<id>.svg` with a `viewBox` of exactly `0 0 500 500`: the frame is an empty 500 × 500
+  `box` rectangle (no fill, no stroke), so the box never draws anything. `<id>.png` is a 500 px
+  render of the SVG.
+- The drawing is about 400 px, centred in the box (about 50 px of margin), in strokes of 36 px with
+  round caps and joins, colour #5F636B, outlined paths only (no text, no filters).
+- Light only: file icons have no dark variant.
+
+Design source: the Silica 1.0 Amalfi Apps Kit (Sketch), artboards `Files / System / Executable 1024`,
+`Archive`, `Disk Image`, `Link`, `Package` and `Data`, group `glyph`.
+
 ### Volumes
 
 `files/volume-*` are the mounted disks and servers, on the volume keyline (944 × 583). They

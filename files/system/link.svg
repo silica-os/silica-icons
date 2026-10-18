@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>link</title>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Files-/-System-/-Link-1024" transform="translate(-262, -262)">
+            <g id="glyph" transform="translate(262, 262)">
+                <rect id="box" x="0" y="0" width="500" height="500"></rect>
+                <path d="M228.352,153.568 L261.808,120.112 C282.90096,99.0190396 313.64462,90.7813008 342.45814,98.5018602 C371.27166,106.22242 393.77758,128.72834 401.49814,157.54186 C409.218699,186.35538 400.98096,217.09904 379.888,238.192 L346.432,271.648" id="link-upper" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M271.648,346.432 L238.192,379.888 C205.585108,412.494892 152.718892,412.494892 120.112,379.888 C87.5051084,347.281108 87.5051084,294.414892 120.112,261.808 L153.568,228.352" id="link-lower" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></path>
+                <line x1="198.832" y1="301.168" x2="301.168" y2="198.832" id="bar" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></line>
+            </g>
+        </g>
+    </g>
+</svg>
