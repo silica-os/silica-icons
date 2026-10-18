@@ -88,8 +88,8 @@ thumbnail generator in silica-desktop).
   `icon.png` / `icon-dark.png` and the composed clear and tinted appearances, plus the Silica logo
   (`silica`); calendar and clock are dynamic.
 - `files/`: one folder in three layers (back, middle sheet shown when it has items, front), one generic file in
-  two layers (back and folded front), 6 system document glyphs (`files/system/`: executable, archive, disk image,
-  link, package, data; 500 × 500, light only), 5 volumes (internal disk,
+  two layers (back and folded front), 7 system document glyphs (`files/system/`: executable, archive, disk image,
+  link, package, data, unknown; 500 × 500, light only), 5 volumes (internal disk,
   external, network server, mounted disk image, optical disc), empty and full Trash. For file icons the side is the full
   canvas: sheets, folders, volumes and Trash fill almost all of it, as in the reference (document keyline 684 × 904, folder 956 × 776,
   volume 944 × 583, Trash 656 × 824).

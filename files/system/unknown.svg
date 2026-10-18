@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="500px" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>unknown</title>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Files-/-System-/-Unknown-1024" transform="translate(-262, -262)">
+            <g id="glyph" transform="translate(262, 262)">
+                <rect id="box" x="0" y="0" width="500" height="500"></rect>
+                <path d="M198.83,202.77 C199.151446,176.927061 218.020907,155.063482 243.53908,150.966692 C269.057253,146.869903 293.822198,161.72824 302.216849,186.171863 C310.6115,210.615485 300.20086,237.554142 277.55,250 C259.84,259.84 250,269.68 250,289.36 L250,297.24" id="hook" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M67.96,250 C67.96,350.537916 149.462084,432.04 250,432.04 C350.537916,432.04 432.04,350.537916 432.04,250 C432.04,149.462084 350.537916,67.96 250,67.96 C149.462084,67.96 67.96,149.462084 67.96,250 Z" id="circle" stroke="#5F636B" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M275.6,352.34 C275.6,338.20151 264.13849,326.74 250,326.74 C235.86151,326.74 224.4,338.20151 224.4,352.34 C224.4,366.47849 235.86151,377.94 250,377.94 C264.13849,377.94 275.6,366.47849 275.6,352.34 Z" id="dot" fill="#5F636B"></path>
+            </g>
+        </g>
+    </g>
+</svg>

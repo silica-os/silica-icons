@@ -331,7 +331,7 @@ Design source: the Silica 1.0 Amalfi Apps Kit (Sketch), artboard `Files / File 1
 ### System document glyphs
 
 `files/system/` holds the glyphs of the structural system types (not format-specific documents):
-`executable`, `archive`, `disk-image`, `link`, `package`, `data`. The thumbnail generator places
+`executable`, `archive`, `disk-image`, `link`, `package`, `data`, `unknown`. The thumbnail generator places
 the glyph in its glyph box, between the `back` and the `front` of the generic file, fitted and
 centred, and draws it as-is (no tint, no recolouring).
 
@@ -340,10 +340,14 @@ centred, and draws it as-is (no tint, no recolouring).
   render of the SVG.
 - The drawing is about 400 px, centred in the box (about 50 px of margin), in strokes of 36 px with
   round caps and joins, colour #5F636B, outlined paths only (no text, no filters).
+- `unknown` (a question mark in a circle, the Silica Symbols `question` geometry) is used for a file of
+  unknown type: with an extension of 1 to 5 characters the thumbnail generator draws the extension
+  as a label below the glyph, like the other system types; with no extension, or one longer than 5
+  characters, it draws the glyph without a label.
 - Light only: file icons have no dark variant.
 
 Design source: the Silica 1.0 Amalfi Apps Kit (Sketch), artboards `Files / System / Executable 1024`,
-`Archive`, `Disk Image`, `Link`, `Package` and `Data`, group `glyph`.
+`Archive`, `Disk Image`, `Link`, `Package`, `Data` and `Unknown`, group `glyph`.
 
 ### Volumes
 
