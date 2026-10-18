@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="30%" y1="0%" x2="70%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#2F68DB" stop-opacity="0.941176471" offset="0%"></stop>
+            <stop stop-color="#143C98" stop-opacity="0.960784314" offset="55%"></stop>
+            <stop stop-color="#061A52" stop-opacity="0.980392157" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-3" cx="189" cy="189" r="189"></circle>
+        <filter x="-2.9%" y="-2.9%" width="105.8%" height="105.8%" filterUnits="objectBoundingBox" id="filter-4">
+            <feGaussianBlur stdDeviation="5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="8" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.62745098 0" type="matrix" in="shadowInnerInner1" result="shadowMatrixInner1"></feColorMatrix>
+            <feGaussianBlur stdDeviation="7" in="SourceAlpha" result="shadowBlurInner2"></feGaussianBlur>
+            <feOffset dx="0" dy="-8" in="shadowBlurInner2" result="shadowOffsetInner2"></feOffset>
+            <feComposite in="shadowOffsetInner2" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner2"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.498039216   0 0 0 0 0.690196078   0 0 0 0 1  0 0 0 0.4 0" type="matrix" in="shadowInnerInner2" result="shadowMatrixInner2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Apps-/-Camera-1024" stroke="none" fill="none" fill-rule="evenodd">
+        <g id="lens" stroke-width="1" transform="translate(323, 311)">
+            <g id="Lens-Glass">
+                <use fill="url(#linearGradient-2)" fill-rule="evenodd" xlink:href="#path-3"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                <circle stroke-opacity="0.180392157" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="square" cx="189" cy="189" r="188"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

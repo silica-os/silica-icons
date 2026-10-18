@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+    </defs>
+    <g id="Apps-/-Music-1024" stroke="none" fill="none" fill-rule="evenodd">
+        <g id="grooves" stroke-width="1" transform="translate(262, 262)" stroke="#FFFFFF" stroke-linecap="round" stroke-opacity="0.341176471">
+            <path d="M0,250 C0,111.928813 111.928813,0 250,0" id="Groove-UL-1" stroke-width="12"></path>
+            <path d="M441,411 C393.556459,467.359579 323.670116,499.924419 250,500" id="Groove-LR-1" stroke-width="12"></path>
+            <path d="M38,250 C38,132.915633 132.915633,38 250,38" id="Groove-UL-2" stroke-width="12"></path>
+            <path d="M412,387 C371.671085,434.625539 312.406806,462.062705 250,462.000107" id="Groove-LR-2" stroke-width="12"></path>
+            <path d="M76,250 C76,153.902454 153.902454,76 250,76" id="Groove-UL-3" stroke-width="12"></path>
+            <path d="M383,362 C349.975525,401.264245 301.305892,423.952345 250,424" id="Groove-LR-3" stroke-width="12"></path>
+        </g>
+    </g>
+</svg>

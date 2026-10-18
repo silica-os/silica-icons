@@ -1,33 +1,67 @@
 {
-  "format": 1,
+  "format": 2,
   "id": "screenshot",
   "name": "Screenshot",
   "kind": "app",
   "keyline": "landscape",
-  "layers": [
-    {
-      "role": "background",
-      "file": "background.svg"
+  "background": {
+    "light": {
+      "gradient": [
+        "#ffffff",
+        "#e4e9f2"
+      ]
     },
-    {
-      "role": "foreground",
-      "file": "foreground.svg",
-      "shadow": "neutral"
-    }
-  ],
-  "variants": {
     "dark": {
-      "background": "background-dark.svg",
-      "foreground": "foreground-dark.svg"
+      "gradient": [
+        "#3a3a3c",
+        "#141416"
+      ]
     }
   },
-  "dynamic": null,
-  "rendered": {
-    "default": "icon.png",
-    "dark": "icon-dark.png",
-    "clear": "icon-clear.png",
-    "clear-dark": "icon-clear-dark.png",
-    "tinted": "icon-tinted.png",
-    "tinted-dark": "icon-tinted-dark.png"
+  "layers": [
+    {
+      "id": "brackets",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    },
+    {
+      "id": "camera",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    },
+    {
+      "id": "lens",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    },
+    {
+      "id": "flash",
+      "role": "detail",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    }
+  ],
+  "fallback": {
+    "light": "icon.png",
+    "dark": "icon-dark.png"
   }
 }

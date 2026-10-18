@@ -1,9 +1,9 @@
 # Icon format
 
-Versions 1 and 2. Format 1 applies to `apps/`, `files/` and `badges/`; format 2 (layered app
-icons, see [Format 2](#format-2-layered-app-icons)) applies to `apps/` only and is in its pilot:
-Mustache, Terminal and Clock use it, the other apps stay on format 1. System symbols
-(`symbols/`) have a separate specification.
+Versions 1 and 2. Every app icon in `apps/` (21 apps) is in format 2 (layered app icons, see
+[Format 2](#format-2-layered-app-icons)); format 1 applies to `files/`, `badges/` and the Silica logo
+(`apps/silica/`, not an app icon), and stays described below because the silica-desktop compiler
+still reads it for app icons. System symbols (`symbols/`) have a separate specification.
 
 ## Principle
 
@@ -121,7 +121,8 @@ group (`icon-dark`); the paths stay those of the 824 drawing. The layers of `fil
 
 ## Folder of an icon
 
-Format 1 (the format 2 folder, with `layers/`, is in [Format 2](#format-2-layered-app-icons)):
+Format 1 (no app icon of this repository uses it any more; the format 2 folder, with `layers/`, is in
+[Format 2](#format-2-layered-app-icons)):
 
 ```
 apps/<id>/
@@ -429,7 +430,7 @@ Design source: the Silica 1.0 Amalfi Apps Kit (Sketch), artboards `Files / Folde
 
 An app icon in format 2 is a stack of named layers that the icon service composes at runtime in
 four appearances: **light, dark, clear, tinted** (clear and tinted each with a light and a dark
-form, so the six themes of format 1 remain). Pilot icons: `mustache`, `terminal`, `clock`.
+form, so the six themes of format 1 remain). All 21 app icons of `apps/` use it.
 
 ### Files
 
@@ -450,7 +451,10 @@ apps/<id>/
 - Layers are listed **bottom to top**. The background is not in the list: it is always the bottom.
   Required: the background and at least one `body` layer; at most 9 layers in total.
 - As in format 1, no body mask, rim or cast shadow is drawn into a layer (see What does NOT go in
-  the layers); internal shading and gradients stay in the SVG. Text is outlined.
+  the layers); internal shading and gradients stay in the SVG. Text is outlined (HarfBuzz shaping,
+  fontTools outlines), so no layer SVG has `<text>`. Sketch's SVG export of a text with an inner shadow
+  writes the inner-shadow `<use>` twice and no plain `<use>` for the fill (Fonts' "Aa": only the shadow
+  renders); the first of the two becomes the plain fill.
 
 ### Manifest
 
@@ -558,16 +562,30 @@ shadows) and anti-aliases with 4 × 4 premultiplied samples per pixel.
 section above; the appearance transform is applied to the unrotated layer, then the layer turns,
 then its shadow is cast (offset stays downward). The second hand follows the format 1 update rule.
 
+The calendar kinds keep the text fields of the format 1 Calendar section (`font`, `size`, `weight`,
+`tracking`, `color`, `dark_color`, `box`, `case`, `format`, `refresh`): the service draws the localized
+month and day in `box` as there. Their layer files (`month.svg`, `day.svg`) are the text at the Apps
+Kit pose, OCT 16, outlined: they are what the fallback and the check sheet show, not what the service
+draws. In clear and tinted the text goes through the layer's mode like any other pixel.
+
+```json
+{ "id": "month", "role": "dynamic", "tinted": { "mode": "accent" },
+  "dynamic": { "kind": "calendar-month", "font": "Inter", "size": 190, "weight": 900, "tracking": 0,
+               "color": "#f5222f", "dark_color": "#ff5a62", "box": [212, 144, 600, 230],
+               "case": "upper", "format": "short", "refresh": "midnight" } }
+```
+
 ### Fallback
 
 `icon.png` and `icon-dark.png` are the whole icon at 1024, flat (body, layers, dynamic parts at
 `fallback.time`), exported from the Apps Kit artboards. They serve where nothing composes: the
 desktop entry, the hicolor copy, other desktops, a compiled file that does not load. For Clock
-they show the hands at 10:09:30, the pose of the Apps Kit artboards.
+they show the hands at 10:09:30, for Calendar the date OCT 16, the poses of the Apps Kit artboards.
 
-During the pilot the format 1 renders `icon-clear*.png` and `icon-tinted*.png` of the three pilot
-icons stay in the repository as regression references for the service output (they are no longer
-sources and have no hands on Clock); they are removed when the pilot ends.
+`icon-clear.png`, `icon-clear-dark.png`, `icon-tinted.png` and `icon-tinted-dark.png` are the other four
+appearances composed by `tools/compose.py` (tinted with `Accent/Amalfi`, at the fallback pose): references
+for the service output, not sources. Like the check sheet they have no cast shadows, rim or backdrop
+blur.
 
 ### Apps Kit convention
 
@@ -578,7 +596,8 @@ instances named `hand-hour`, `hand-minute`, `hand-second`, `cap`, from the full-
 `Dynamic / Clock / …` symbols drawn at 12; their layer files are those symbols. Light and dark
 artboards have the same ids in the same order; a `-dark.svg` is exported only where the dark
 group differs. Properties live only in `icon.json`; the ids in Sketch and in the manifest must
-match one to one. `Grid / Overlay` is not exported.
+match one to one. Calendar's month and day are instances named `month` and `day` of the full-canvas
+`Dynamic / Calendar / Month|Day / Light|Dark` symbols (OCT 16). `Grid / Overlay` is not exported.
 
 Exported shapes follow two rules, so that the SVG renders as the artboard does. A filled shape has no
 inside border: the SVG export draws it as a centred stroke on an inset copy of the shape and shrinks
@@ -591,8 +610,8 @@ operation, the export to the final shape; it is a flattened path with the gradie
 ### Format 1 icons
 
 A format 1 app icon reads as format 2 with one `body` layer (`foreground.svg`) and the background
-file; the clear and tinted looks come from the same rules. The other apps keep format 1 until
-they move to `layers/`.
+file; the clear and tinted looks come from the same rules. No app icon of this repository is in
+format 1; the rule is kept for app icons elsewhere.
 
 ## Icons without layers
 

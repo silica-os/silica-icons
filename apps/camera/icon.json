@@ -1,33 +1,69 @@
 {
-  "format": 1,
+  "format": 2,
   "id": "camera",
   "name": "Camera",
   "kind": "app",
   "keyline": "full",
-  "dynamic": null,
-  "layers": [
-    {
-      "role": "background",
-      "file": "background.svg"
+  "background": {
+    "light": {
+      "gradient": [
+        "#34353c",
+        "#0e0f12"
+      ]
     },
-    {
-      "role": "foreground",
-      "file": "foreground.svg",
-      "shadow": "neutral"
-    }
-  ],
-  "variants": {
     "dark": {
-      "background": "background-dark.svg",
-      "foreground": "foreground-dark.svg"
+      "gradient": [
+        "#25262b",
+        "#070708"
+      ]
     }
   },
-  "rendered": {
-    "default": "icon.png",
-    "dark": "icon-dark.png",
-    "clear": "icon-clear.png",
-    "clear-dark": "icon-clear-dark.png",
-    "tinted": "icon-tinted.png",
-    "tinted-dark": "icon-tinted-dark.png"
+  "layers": [
+    {
+      "id": "lens-ring",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    },
+    {
+      "id": "lens",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    },
+    {
+      "id": "lens-specular",
+      "role": "highlight",
+      "clear": {
+        "mode": "keep",
+        "opacity": 0.6
+      },
+      "tinted": {
+        "mode": "keep",
+        "opacity": 0.6
+      }
+    },
+    {
+      "id": "flash",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    }
+  ],
+  "fallback": {
+    "light": "icon.png",
+    "dark": "icon-dark.png"
   }
 }

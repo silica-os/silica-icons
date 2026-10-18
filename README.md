@@ -39,15 +39,17 @@ The system symbols are also an icon font for Sketch and Flutter: see the Font se
 ## Model
 
 - App icons contain neither shape nor shadow: the developer supplies a background and
-  up to four groups of SVG layers on the 1024 grid; the shell clips them with the mask
+  named SVG layers on the 1024 grid; the shell clips them with the mask
   (body 824, smooth corners, outline `tools/body.svg`), adds border, shadows and glass and
   generates the themes Default, Dark, Clear Light, Clear Dark, Tinted Light, Tinted Dark.
 - Icons without layers (an existing freedesktop theme) are reduced to the 600 keyline and
   placed on a neutral base.
-- Format 2 (pilot: Mustache, Terminal, Clock): each app icon is a stack of named SVG layers in
-  `apps/<id>/layers/` with per-layer roles and modes in `icon.json`, composed in four
-  appearances (light, dark, clear, tinted); `icon.png` / `icon-dark.png` are the flat fallback.
-  The other apps are still format 1 (`background.svg`, `foreground.svg`).
+- Format 2 (all 21 apps): each app icon is a stack of named SVG layers in `apps/<id>/layers/`
+  with per-layer roles and modes in `icon.json`, composed in four appearances (light, dark,
+  clear, tinted); `icon.png` / `icon-dark.png` are the flat fallback from the Apps Kit,
+  `icon-clear*.png` / `icon-tinted*.png` the other appearances composed by `tools/compose.py`.
+  Format 1 (`background.svg`, `foreground.svg`) remains for the Silica logo, file icons and
+  badges.
 - Format specification: [`docs/icon-format.md`](docs/icon-format.md).
 
 ## Design source
@@ -71,8 +73,8 @@ venv/bin/python tools/compose.py --dark --fonts <folder with Inter> --out build/
 venv/bin/python tools/compose.py --appearance tinted --dark --out build/sheet-tinted-dark.png
 ```
 
-`--appearance clear|tinted` (with `--accent` and `--time`) applies to format 2 icons; format 1
-icons are drawn in light or dark.
+`--appearance clear|tinted` (with `--accent` and `--time`) applies to format 2 icons (every app);
+format 1 icons (the logo, files) are drawn in light or dark.
 
 `compose.py` recomposes every icon from its layers as the shell would and writes a check
 sheet (layers only: symbols, text and tints of file and folder thumbnails belong to the
@@ -82,8 +84,9 @@ thumbnail generator in silica-desktop).
 
 - `apps/`: 21 apps (apps, calculator, calendar, camera, clock, disks, fonts, mail, messages,
   mission-control, music, mustache, notes, password-manager, photo-viewer, photos, reminders,
-  screenshot, settings, terminal, text-editor) plus the Silica logo (`silica`), with dark variants and a rendered `icon.png` / `icon-dark.png`; calendar and clock
-  are dynamic.
+  screenshot, settings, terminal, text-editor), all in format 2 with dark layers, the flat fallback
+  `icon.png` / `icon-dark.png` and the composed clear and tinted appearances, plus the Silica logo
+  (`silica`); calendar and clock are dynamic.
 - `files/`: one folder in three layers (back, middle sheet shown when it has items, front), one generic file in
   two layers (back and folded front), 5 volumes (internal disk,
   external, network server, mounted disk image, optical disc), empty and full Trash. For file icons the side is the full

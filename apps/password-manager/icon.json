@@ -1,33 +1,57 @@
 {
-  "format": 1,
+  "format": 2,
   "id": "password-manager",
   "name": "Password Manager",
   "kind": "app",
   "keyline": "portrait",
-  "layers": [
-    {
-      "role": "background",
-      "file": "background.svg"
+  "background": {
+    "light": {
+      "gradient": [
+        "#222327",
+        "#0c0c0e"
+      ]
     },
-    {
-      "role": "foreground",
-      "file": "foreground.svg",
-      "shadow": "neutral"
-    }
-  ],
-  "variants": {
     "dark": {
-      "background": "background-dark.svg",
-      "foreground": "foreground-dark.svg"
+      "gradient": [
+        "#151517",
+        "#040405"
+      ]
     }
   },
-  "dynamic": null,
-  "rendered": {
-    "default": "icon.png",
-    "dark": "icon-dark.png",
-    "clear": "icon-clear.png",
-    "clear-dark": "icon-clear-dark.png",
-    "tinted": "icon-tinted.png",
-    "tinted-dark": "icon-tinted-dark.png"
+  "layers": [
+    {
+      "id": "key-yellow",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    },
+    {
+      "id": "key-blue",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    },
+    {
+      "id": "key-green",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    }
+  ],
+  "fallback": {
+    "light": "icon.png",
+    "dark": "icon-dark.png"
   }
 }

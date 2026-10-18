@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.450980392" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Apps-/-Messages-1024" stroke="none" fill="none" fill-rule="evenodd">
+        <g id="front-specular" stroke-width="1" transform="translate(445, 369)" fill="url(#linearGradient-2)">
+            <path d="M80,0 L264,0 C292.002625,0 306.003938,0 316.699525,5.44967379 C333.45218,13.985578 344,31.1980554 344,50 C344,68.8019446 333.45218,86.014422 316.699525,94.5503262 C306.003938,100 292.002625,100 264,100 L80,100 C51.9973747,100 37.996062,100 27.300475,94.5503262 C10.5478197,86.014422 0,68.8019446 0,50 C0,31.1980554 10.5478197,13.985578 27.300475,5.44967379 C37.996062,0 51.9973747,0 80,0 Z" id="Front-Specular"></path>
+        </g>
+    </g>
+</svg>

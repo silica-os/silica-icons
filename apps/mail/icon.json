@@ -1,33 +1,67 @@
 {
-  "format": 1,
+  "format": 2,
   "id": "mail",
   "name": "Mail",
   "kind": "app",
   "keyline": "landscape",
-  "layers": [
-    {
-      "role": "background",
-      "file": "background.svg"
+  "background": {
+    "light": {
+      "gradient": [
+        "#ffffff",
+        "#dde3ec"
+      ]
     },
-    {
-      "role": "foreground",
-      "file": "foreground.svg",
-      "shadow": "neutral"
-    }
-  ],
-  "variants": {
     "dark": {
-      "background": "background-dark.svg",
-      "foreground": "foreground-dark.svg"
+      "gradient": [
+        "#3a3a3c",
+        "#141416"
+      ]
     }
   },
-  "dynamic": null,
-  "rendered": {
-    "default": "icon.png",
-    "dark": "icon-dark.png",
-    "clear": "icon-clear.png",
-    "clear-dark": "icon-clear-dark.png",
-    "tinted": "icon-tinted.png",
-    "tinted-dark": "icon-tinted-dark.png"
+  "layers": [
+    {
+      "id": "envelope-back",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    },
+    {
+      "id": "letter",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    },
+    {
+      "id": "letter-lines",
+      "role": "detail",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    },
+    {
+      "id": "envelope-front",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    }
+  ],
+  "fallback": {
+    "light": "icon.png",
+    "dark": "icon-dark.png"
   }
 }

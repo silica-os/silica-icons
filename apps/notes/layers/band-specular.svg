@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.4" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Apps-/-Notes-1024" stroke="none" fill="none" fill-rule="evenodd">
+        <g id="band-specular" stroke-width="1" transform="translate(212, 108)" fill="url(#linearGradient-2)">
+            <path d="M60.8,0 L539.2,0 C560.481995,0 571.122993,0 579.251639,4.14175208 C591.983657,10.6290393 600,23.7105221 600,38 C600,52.2894779 591.983657,65.3709607 579.251639,71.8582479 C571.122993,76 560.481995,76 539.2,76 L60.8,76 C39.5180048,76 28.8770072,76 20.748361,71.8582479 C8.01634301,65.3709607 0,52.2894779 0,38 C0,23.7105221 8.01634301,10.6290393 20.748361,4.14175208 C28.8770072,0 39.5180048,0 60.8,0 Z" id="Band-Specular"></path>
+        </g>
+    </g>
+</svg>

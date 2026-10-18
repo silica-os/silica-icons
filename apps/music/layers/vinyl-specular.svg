@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.180392157" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Apps-/-Music-1024" stroke="none" fill="none" fill-rule="evenodd">
+        <g id="vinyl-specular" stroke-width="1" transform="translate(310, 240)" fill="url(#linearGradient-2)">
+            <ellipse id="Vinyl-Specular" cx="202" cy="85" rx="202" ry="85"></ellipse>
+        </g>
+    </g>
+</svg>

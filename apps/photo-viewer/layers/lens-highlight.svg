@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="11.3911973%" y1="20%" x2="69.3044014%" y2="60%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.949019608" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="85%" y1="85%" x2="55%" y2="55%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" stop-opacity="0.8" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Apps-/-Preview-1024" stroke="none" fill="none" fill-rule="evenodd">
+        <g id="lens-highlight" stroke-width="1" transform="translate(559, 536)">
+            <path d="M104,0 C141.480768,0 174.330667,19.8271099 192.633428,49.565062 C173.888308,31.2720437 148.260517,20 120,20 C62.562386,20 16,66.562386 16,124 C16,143.956426 21.6209277,162.600015 31.3659577,178.43394 C12.0146622,159.547009 0,133.176592 0,104 C0,46.562386 46.562386,0 104,0 Z" id="Highlight-Top" fill="url(#linearGradient-2)"></path>
+            <path d="M172.369601,25.6295884 L172.886667,26.0841574 C194.422408,45.1385934 208,72.9836885 208,104 C208,161.437614 161.437614,208 104,208 C72.7360961,208 44.6942401,194.204773 25.6295261,172.369412 C43.9099796,188.330838 67.8258129,198 94,198 C151.437614,198 198,151.437614 198,94 C198,67.8258129 188.330838,43.9099796 172.369601,25.6295884 Z" id="Highlight-Bottom" fill="url(#linearGradient-3)"></path>
+        </g>
+    </g>
+</svg>

@@ -1,33 +1,37 @@
 {
-  "format": 1,
+  "format": 2,
   "id": "disks",
   "name": "Disks",
   "kind": "app",
   "keyline": "landscape",
-  "layers": [
-    {
-      "role": "background",
-      "file": "background.svg"
+  "background": {
+    "light": {
+      "gradient": [
+        "#707076",
+        "#323238"
+      ]
     },
-    {
-      "role": "foreground",
-      "file": "foreground.svg",
-      "shadow": "neutral"
-    }
-  ],
-  "variants": {
     "dark": {
-      "background": "background-dark.svg",
-      "foreground": "foreground-dark.svg"
+      "gradient": [
+        "#47474d",
+        "#101013"
+      ]
     }
   },
-  "dynamic": null,
-  "rendered": {
-    "default": "icon.png",
-    "dark": "icon-dark.png",
-    "clear": "icon-clear.png",
-    "clear-dark": "icon-clear-dark.png",
-    "tinted": "icon-tinted.png",
-    "tinted-dark": "icon-tinted-dark.png"
+  "layers": [
+    {
+      "id": "wrench",
+      "role": "body",
+      "clear": {
+        "mode": "ramp"
+      },
+      "tinted": {
+        "mode": "ramp"
+      }
+    }
+  ],
+  "fallback": {
+    "light": "icon.png",
+    "dark": "icon-dark.png"
   }
 }
