@@ -23,10 +23,19 @@
       "id": "brackets",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          20,
+          180
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {

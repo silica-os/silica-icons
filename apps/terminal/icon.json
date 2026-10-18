@@ -24,30 +24,58 @@
       "role": "detail",
       "min_size": 32,
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          20,
+          150
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
       "id": "prompt",
       "role": "body",
       "clear": {
-        "mode": "light"
+        "mode": "ramp",
+        "luma": [
+          10,
+          90
+        ]
       },
       "tinted": {
         "mode": "light"
+      },
+      "dark": {
+        "clear": {
+          "mode": "light",
+          "luma": null
+        }
       }
     },
     {
       "id": "cursor",
       "role": "detail",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          0,
+          130
+        ]
       },
       "tinted": {
         "mode": "accent"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     }
   ],

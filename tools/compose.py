@@ -234,6 +234,8 @@ ROLE_MODES = {  # role -> (clear, tinted, opacity factor of those modes)
 }
 GLASS = {"top": 0.85, "bottom": 0.55, "blur": 12.0}
 TINT_DARKEN = 0.7  # tinted light ramp: L 0 is the accent mixed with black 70 % (as in tinted dark)
+CLEAR_RAMP = {False: (50, 255), True: (150, 255)}  # clear ramp ends (grey levels), light and dark form
+CLEAR_GAMMA = {False: 1.6, True: 1.0}  # clear ramp contrast curve: grey = lo + (hi - lo) * L ** gamma
 
 
 def hex_rgb(h: str) -> np.ndarray:
@@ -349,7 +351,8 @@ def transform(px: np.ndarray, mode: str, appearance: str, dark: bool, accent: np
         if mode == "light":
             lo, hi = 200, 255
         else:
-            lo, hi = luma or ((150, 255) if dark else (105, 255))
+            lo, hi = luma or CLEAR_RAMP[dark]
+            L = L ** CLEAR_GAMMA[dark]
         rgb = np.repeat(((lo + (hi - lo) * L) / 255)[..., None], 3, -1)
     elif mode == "accent":
         rgb = accent_map(L, accent)

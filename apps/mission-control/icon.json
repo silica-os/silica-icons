@@ -33,20 +33,38 @@
       "id": "space-current",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          10,
+          90
+        ]
       },
       "tinted": {
         "mode": "accent"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
       "id": "windows",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          10,
+          90
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {

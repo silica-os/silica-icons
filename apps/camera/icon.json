@@ -37,6 +37,14 @@
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": [
+            20,
+            100
+          ]
+        }
       }
     },
     {

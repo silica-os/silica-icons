@@ -33,10 +33,19 @@
       "id": "key-equals",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          0,
+          100
+        ]
       },
       "tinted": {
         "mode": "accent"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
@@ -59,6 +68,14 @@
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": [
+            20,
+            80
+          ]
+        }
       }
     }
   ],

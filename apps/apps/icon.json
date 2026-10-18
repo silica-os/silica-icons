@@ -33,10 +33,19 @@
       "id": "tiles",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          20,
+          140
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
@@ -69,6 +78,14 @@
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": [
+            20,
+            80
+          ]
+        }
       }
     }
   ],

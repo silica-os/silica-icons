@@ -23,20 +23,38 @@
       "id": "back-bubble",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          30,
+          140
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
       "id": "front-bubble",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          0,
+          85
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
@@ -55,10 +73,22 @@
       "id": "dots",
       "role": "detail",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          80,
+          255
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": [
+            20,
+            80
+          ]
+        }
       }
     }
   ],

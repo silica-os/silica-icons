@@ -23,20 +23,38 @@
       "id": "guides",
       "role": "detail",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          0,
+          60
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
       "id": "metrics",
       "role": "detail",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          0,
+          150
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {

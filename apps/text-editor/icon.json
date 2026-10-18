@@ -23,20 +23,38 @@
       "id": "selection",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          0,
+          100
+        ]
       },
       "tinted": {
         "mode": "accent"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
       "id": "i-beam",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          0,
+          90
+        ]
       },
       "tinted": {
         "mode": "accent"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     }
   ],

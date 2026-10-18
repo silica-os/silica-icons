@@ -23,10 +23,19 @@
       "id": "gear",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          10,
+          95
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
@@ -37,6 +46,14 @@
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": [
+            20,
+            100
+          ]
+        }
       }
     },
     {

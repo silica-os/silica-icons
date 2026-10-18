@@ -23,10 +23,19 @@
       "id": "date-disc",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          10,
+          170
+        ]
       },
       "tinted": {
         "mode": "accent"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
@@ -45,10 +54,19 @@
       "id": "month",
       "role": "dynamic",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          20,
+          160
+        ]
       },
       "tinted": {
         "mode": "accent"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       },
       "dynamic": {
         "kind": "calendar-month",
@@ -77,6 +95,14 @@
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": [
+            20,
+            80
+          ]
+        }
       },
       "dynamic": {
         "kind": "calendar-day",

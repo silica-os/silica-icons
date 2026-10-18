@@ -23,30 +23,57 @@
       "id": "rings",
       "role": "body",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          10,
+          150
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
       "id": "check",
       "role": "detail",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          10,
+          150
+        ]
       },
       "tinted": {
         "mode": "accent"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     },
     {
       "id": "lines",
       "role": "detail",
       "clear": {
-        "mode": "ramp"
+        "mode": "ramp",
+        "luma": [
+          10,
+          130
+        ]
       },
       "tinted": {
         "mode": "ramp"
+      },
+      "dark": {
+        "clear": {
+          "luma": null
+        }
       }
     }
   ],

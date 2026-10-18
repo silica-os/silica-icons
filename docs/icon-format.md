@@ -254,8 +254,8 @@ The shell generates six themes from the layers:
 | --- | --- | --- |
 | Default | `background` | `foreground` |
 | Dark | `background-dark`, otherwise graphite `#3a3a3c → #161618` | `foreground-dark`, otherwise `foreground` |
-| Clear Light | light glass (white 50 % → 25 % over the blurred backdrop) | `foreground` in grayscale, luminance mapped to 105–255 |
-| Clear Dark | dark glass (graphite 50 % → black 55 %) | as above, mapped to 150–255 |
+| Clear Light | light glass (white 50 % → 25 % over the blurred backdrop) | `foreground` in grayscale, luminance L mapped to 50–255 through the curve L^1.6 |
+| Clear Dark | dark glass (graphite 50 % → black 55 %) | `foreground` in grayscale, L mapped linearly to 150–255 |
 | Tinted Light | tint lightened to 90 % → 76 % | luminance mapped to the tint (dark → tint → white) |
 | Tinted Dark | tint darkened to 62 % → 84 % | luminance mapped from dark tint to light tint |
 
@@ -493,7 +493,7 @@ for every icon (no per-icon override): only layers carry per-icon choices.
 | `shadow` | `neutral` for body and dynamic, else `none` | cast shadow drawn by the service (format 1 values) |
 | `min_size` | 0 | drawn only when the icon side in pt is at least this |
 | `clear`, `tinted` | by role | `{ "mode", "opacity", "luma": [lo, hi] }` for that appearance |
-| `dark` | `{}` | overrides for the dark forms: `file` (default `layers/<id>-dark.svg` when it exists), `opacity`, `blend`, `shadow`, and `clear` / `tinted` objects for clear dark and tinted dark; missing keys inherit |
+| `dark` | `{}` | overrides for the dark forms: `file` (default `layers/<id>-dark.svg` when it exists), `opacity`, `blend`, `shadow`, and `clear` / `tinted` objects for clear dark and tinted dark; missing keys inherit, `"luma": null` goes back to the default ramp |
 | `dynamic` | none | for role `dynamic` only, see below |
 
 | Role | clear | tinted | Use |
@@ -525,21 +525,32 @@ changed by a mode, then the layer opacity applies.
 
    | Mode | clear | tinted, light form | tinted, dark form |
    | --- | --- | --- | --- |
-   | `ramp` | grey, L → 105…255 (dark form 150…255) | L 0 → T with black 70 %, 0.5 → T, 1 → white | L 0 → T with black 70 %, 1 → T with white 60 % |
+   | `ramp` | grey: light form L^1.6 → 50…255, dark form L → 150…255 | L 0 → T with black 70 %, 0.5 → T, 1 → white | L 0 → T with black 70 %, 1 → T with white 60 % |
    | `light` | grey, L → 200…255 | white shaded by L (200…255) | T with white 70 %, shaded by L |
    | `glass` | white glass, see below | not allowed | not allowed |
    | `accent` | not allowed | OKLCH(L, chroma and hue of T), chroma reduced into sRGB | same |
    | `keep` | as drawn | as drawn | as drawn |
    | `hide` | not drawn | not drawn | not drawn |
 
-   `luma: [lo, hi]` replaces the ends of the ramp for one layer: grey levels 0–255 in clear,
-   positions 0–1 on the tinted ramp in tinted.
+   `luma: [lo, hi]` replaces the ends of the ramp for one layer: grey levels 0–255 in clear (the
+   curve of the form stays), positions 0–1 on the tinted ramp in tinted.
    `glass`: inside the layer's alpha the stack below is blurred (σ 12 canvas units) and covered
    by white at opacity 0.85 (top of the layer) → 0.55 (bottom), with a 4-unit light lip along
    its top edge. At most one glass layer per icon.
 4. Cast shadows from the layer alpha (neutral, or chromatic from its mean colour) in light, dark
    and tinted; in clear only for body and dynamic layers, at half strength.
 5. Blend, clip to the body, draw the rim (format 1 values; clear and tinted use the light ones).
+
+Contrast in clear. The glass body is nearly white in the light form and nearly black in the dark
+one, so a piece drawn white for a dark background (Disks' wrench, Settings' gear, Messages'
+bubbles) or a mid-tone piece (Calendar's red month) would fade into it. Each main shape keeps a
+WCAG contrast of at least 3:1 with what is under it, measured on the composed icon over a mid-grey
+(128) backdrop, as the median colour of the layer against the median colour of the stack below it;
+details drawn only from a `min_size` and hairlines may be lower. Where the ramp alone does not reach
+it, the layer gets a `clear.luma` (light form, usually a dark range such as `[10, 95]`, so the
+shape reads dark grey on the glass) and, if the dark form is fine with the default, `"dark":
+{ "clear": { "luma": null } }`; a white detail on a white piece in the dark form gets a dark range
+in `dark.clear` (Calendar's day, Calculator's glyphs).
 
 `tools/compose.py` follows steps 1–3 and 5 without shadows and rim (`--appearance clear|tinted`,
 `--dark`, `--accent`, `--time`): the check sheet shows the layers and their
